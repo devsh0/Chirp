@@ -12,8 +12,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-public class AuthorizationController {
-    private static final Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
+public class AuthenticationController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     @PostMapping("/register")
     @ResponseBody
