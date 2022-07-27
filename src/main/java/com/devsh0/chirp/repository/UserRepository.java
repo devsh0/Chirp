@@ -1,6 +1,6 @@
 package com.devsh0.chirp.repository;
 
-import com.devsh0.chirp.model.User;
+import com.devsh0.chirp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

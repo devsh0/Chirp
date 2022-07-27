@@ -1,4 +1,4 @@
-package com.devsh0.chirp.model;
+package com.devsh0.chirp.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
