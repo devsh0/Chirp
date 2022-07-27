@@ -1,7 +1,8 @@
 package com.devsh0.chirp.service;
 
 import com.devsh0.chirp.dto.RegistrationRequestBody;
+import com.devsh0.chirp.dto.RegistrationResponseBody;
 
 public interface AuthenticationService {
-    void registerUser(RegistrationRequestBody body);
+    RegistrationResponseBody registerUser(RegistrationRequestBody body);
 }

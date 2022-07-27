@@ -3,6 +3,7 @@ package com.devsh0.chirp.controller;
 import com.devsh0.chirp.dto.RegistrationRequestBody;
 import com.devsh0.chirp.dto.RegistrationResponseBody;
 import com.devsh0.chirp.util.Utils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +28,7 @@ class AuthenticationControllerTest {
                 .andReturn().getResponse();
     }
 
+    @Disabled
     @Test
     public void registrationSucceedsOnValidInput() throws Exception {
         var request = new RegistrationRequestBody("test@test.com", "user", "password");
