@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface AuthenticationService {
     boolean isEmailExists(String email);
     boolean isUsernameExists(String username);
-    String register(String email, String username, String password) throws IOException;
+    User register(String email, String username, String password) throws IOException;
     VerificationToken createVerificationToken(User user);
 }

@@ -2,6 +2,8 @@ package com.devsh0.chirp.service.impl;
 
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.entity.VerificationToken;
+import com.devsh0.chirp.exception.EmailExistsException;
+import com.devsh0.chirp.exception.UsernameExistsException;
 import com.devsh0.chirp.other.EmailTemplate;
 import com.devsh0.chirp.repository.UserRepository;
 import com.devsh0.chirp.repository.VerificationTokenRepository;
@@ -42,18 +44,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String register(String email, String username, String password) throws IOException {
+    public User register(String email, String username, String password) throws IOException {
         if (isEmailExists(email))
-            return "an account exists with this email!";
+            throw new EmailExistsException( "an account exists with this email!");
         if (isUsernameExists(username))
-            return "username already taken!";
+            throw new UsernameExistsException("this username is taken!");
 
         // Store user in database, create verification token, and send the confirmation email.
         var user = User.builder().email(email).username(username).password(passwordEncoder.encode(password)).build();
         user = userRepository.save(user);
         var verificationToken = createVerificationToken(user);
         sendConfirmationEmail(user, verificationToken.getToken());
-        return user.getUsername();
+        return user;
     }
 
     private void sendConfirmationEmail(User user, String token) throws IOException {
