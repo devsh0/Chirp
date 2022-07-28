@@ -29,11 +29,9 @@ public class AuthenticationController {
     }
 
     @ResponseBody
-    @PostMapping("/verify")
+    @RequestMapping("/verify")
     public ResponseEntity<VerificationResponse> verifyToken(@RequestParam String token) {
-        boolean success = authenticationService.verifyToken(token);
-        if (!success)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(VerificationResponse.failure());
+        authenticationService.verifyToken(token);
         return ResponseEntity.ok(VerificationResponse.success());
     }
 }

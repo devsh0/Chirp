@@ -3,6 +3,8 @@ package com.devsh0.chirp.service.impl;
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.entity.VerificationToken;
 import com.devsh0.chirp.exception.EmailExistsException;
+import com.devsh0.chirp.exception.TokenDoesNotExistException;
+import com.devsh0.chirp.exception.TokenExpiredException;
 import com.devsh0.chirp.exception.UsernameExistsException;
 import com.devsh0.chirp.other.EmailTemplate;
 import com.devsh0.chirp.repository.UserRepository;
@@ -44,9 +46,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean verifyToken(String token) {
-        // Fixme: nope don't do this.
-        return false;
+    public void verifyToken(String tokenString) {
+        var token = tokenRepository.findByToken(tokenString);
+        if (token == null)
+            throw new TokenDoesNotExistException("this token does not exist!");
+        var expired = token.hasExpired();
+        if (expired)
+            throw new TokenExpiredException("token expired!");
     }
 
     @Override

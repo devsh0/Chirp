@@ -22,6 +22,13 @@ public class VerificationToken {
     private String token;
     private Date expiry;
 
+    public boolean hasExpired() {
+        var now = Calendar.getInstance();
+        var expiry = Calendar.getInstance();
+        expiry.setTime(this.expiry);
+        return now.after(expiry);
+    }
+
     public static VerificationToken generateToken(User user) {
         var newToken = new VerificationToken();
         newToken.userId = user.getId();
