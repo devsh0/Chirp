@@ -3,6 +3,7 @@ package com.devsh0.chirp.controller;
 import com.devsh0.chirp.dto.RegistrationRequestBody;
 import com.devsh0.chirp.dto.RegistrationResponseBody;
 import com.devsh0.chirp.service.AuthenticationService;
+import com.devsh0.chirp.service.EmailService;
 import com.devsh0.chirp.util.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,8 @@ public class AuthenticationController {
             var responseBody = new RegistrationResponseBody(false, Utils.mapFrom("username", report).get());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
         }
+
+        // Registration went okay, send the confirmation email.
         return ResponseEntity.ok(RegistrationResponseBody.success());
     }
 }
