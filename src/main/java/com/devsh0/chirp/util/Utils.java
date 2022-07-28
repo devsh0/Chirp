@@ -1,14 +1,17 @@
 package com.devsh0.chirp.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Utils {
     private static final ObjectMapper jsonMapper = new ObjectMapper();
+
     public static class MapBuilder<T, V> {
         private final Map<T, V> map = new HashMap<>();
 
@@ -45,5 +48,11 @@ public class Utils {
     public static String getRequestUrl() {
         var request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         return request.getRequestURL().toString();
+    }
+
+    public static String getTemplateResource(String templateName) throws IOException {
+        String path = "templates/" + templateName;
+        var templateResource = new ClassPathResource(path);
+        return new String(templateResource.getInputStream().readAllBytes());
     }
 }

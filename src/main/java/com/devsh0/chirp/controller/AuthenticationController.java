@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class AuthenticationController {
 
     @ResponseBody
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResponseBody> register(@Valid @RequestBody RegistrationRequestBody registrationRequestBody, BindingResult bindingResult) {
+    public ResponseEntity<RegistrationResponseBody> register(@Valid @RequestBody RegistrationRequestBody registrationRequestBody, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(RegistrationResponseBody.withBindingErrors(bindingResult));
         String report = authenticationService.register(registrationRequestBody.getEmail(), registrationRequestBody.getUsername(), registrationRequestBody.getPassword());
