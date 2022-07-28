@@ -1,11 +1,8 @@
 package com.devsh0.chirp.service.impl;
 
-import com.devsh0.chirp.dto.RegistrationRequestBody;
-import com.devsh0.chirp.dto.RegistrationResponseBody;
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.repository.UserRepository;
 import com.devsh0.chirp.service.AuthenticationService;
-import com.devsh0.chirp.util.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

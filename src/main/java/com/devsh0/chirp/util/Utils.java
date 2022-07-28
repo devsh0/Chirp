@@ -28,7 +28,7 @@ public class Utils {
         return new HashMap<>();
     }
 
-    public static <T, V> MapBuilder<T, V> mapOf(T key, V value) {
+    public static <T, V> MapBuilder<T, V> mapFrom(T key, V value) {
         return new MapBuilder<>(key, value);
     }
 

@@ -25,11 +25,11 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body(RegistrationResponseBody.withBindingErrors(bindingResult));
         String report = authenticationService.register(registrationRequestBody.getEmail(), registrationRequestBody.getUsername(), registrationRequestBody.getPassword());
         if (report.contains("email")) {
-            var responseBody = new RegistrationResponseBody(false, Utils.mapOf("email", report).get());
+            var responseBody = new RegistrationResponseBody(false, Utils.mapFrom("email", report).get());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
         }
         if (report.contains("username")) {
-            var responseBody = new RegistrationResponseBody(false, Utils.mapOf("username", report).get());
+            var responseBody = new RegistrationResponseBody(false, Utils.mapFrom("username", report).get());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
         }
         return ResponseEntity.ok(RegistrationResponseBody.success());

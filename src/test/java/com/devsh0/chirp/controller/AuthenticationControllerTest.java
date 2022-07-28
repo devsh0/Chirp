@@ -44,7 +44,7 @@ class AuthenticationControllerTest {
         var request = new RegistrationRequestBody("test", "user", "password");
         var response = registrationRequestHelper(request);
         var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
-        var expectedResponseBody = new RegistrationResponseBody(false, Utils.mapOf("email", "invalid email!").get());
+        var expectedResponseBody = new RegistrationResponseBody(false, Utils.mapFrom("email", "invalid email!").get());
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
@@ -54,7 +54,7 @@ class AuthenticationControllerTest {
         var request = new RegistrationRequestBody("test@mail.com", "us", "password");
         var response = registrationRequestHelper(request);
         var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
-        var errorMap = Utils.mapOf("username", "username must be between 3 to 30 characters long!").get();
+        var errorMap = Utils.mapFrom("username", "username must be between 3 to 30 characters long!").get();
         var expectedResponseBody = new RegistrationResponseBody(false, errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
@@ -65,7 +65,7 @@ class AuthenticationControllerTest {
         var request = new RegistrationRequestBody("test@mail.com", "user", "pass");
         var response = registrationRequestHelper(request);
         var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
-        var errorMap = Utils.mapOf("password", "password must be at least 8 characters long!").get();
+        var errorMap = Utils.mapFrom("password", "password must be at least 8 characters long!").get();
         var expectedResponseBody = new RegistrationResponseBody(false, errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
