@@ -7,11 +7,11 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode
-public class ChirpResponseBody {
+public class TestResponse {
     private final boolean success;
 
     @JsonCreator
-    public ChirpResponseBody(@JsonProperty("success") boolean success) {
+    public TestResponse(@JsonProperty("success") boolean success) {
         this.success = success;
     }
 }
