@@ -1,6 +1,8 @@
 package com.devsh0.chirp.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,5 +40,10 @@ public class Utils {
 
     public static Object fromJson(String json, Class<?> klass) throws Exception {
         return jsonMapper.readValue(json, klass);
+    }
+
+    public static String getRequestUrl() {
+        var request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        return request.getRequestURL().toString();
     }
 }
