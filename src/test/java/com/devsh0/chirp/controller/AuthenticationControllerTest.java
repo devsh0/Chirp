@@ -3,7 +3,6 @@ package com.devsh0.chirp.controller;
 import com.devsh0.chirp.dto.RegistrationRequestBody;
 import com.devsh0.chirp.dto.RegistrationResponseBody;
 import com.devsh0.chirp.util.Utils;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,12 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class AuthenticationControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -28,7 +29,6 @@ class AuthenticationControllerTest {
                 .andReturn().getResponse();
     }
 
-    @Disabled
     @Test
     public void registrationSucceedsOnValidInput() throws Exception {
         var request = new RegistrationRequestBody("test@test.com", "user", "password");
