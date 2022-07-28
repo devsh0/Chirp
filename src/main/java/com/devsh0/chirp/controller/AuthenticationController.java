@@ -3,8 +3,8 @@ package com.devsh0.chirp.controller;
 import com.devsh0.chirp.dto.RegistrationRequestBody;
 import com.devsh0.chirp.dto.RegistrationResponseBody;
 import com.devsh0.chirp.service.AuthenticationService;
+import com.devsh0.chirp.util.Utils;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,8 +23,15 @@ public class AuthenticationController {
     public ResponseEntity<RegistrationResponseBody> register(@Valid @RequestBody RegistrationRequestBody registrationRequestBody, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(RegistrationResponseBody.withBindingErrors(bindingResult));
-        var responseBody = authenticationService.registerUser(registrationRequestBody);
-        var httpStatus = responseBody.getError().isEmpty() ? HttpStatus.OK : HttpStatus.CONFLICT;
-        return ResponseEntity.status(httpStatus).body(responseBody);
+        String report = authenticationService.register(registrationRequestBody.getEmail(), registrationRequestBody.getUsername(), registrationRequestBody.getPassword());
+        if (report.contains("email")) {
+            var responseBody = new RegistrationResponseBody(false, Utils.mapOf("email", report).get());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
+        }
+        if (report.contains("username")) {
+            var responseBody = new RegistrationResponseBody(false, Utils.mapOf("username", report).get());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
+        }
+        return ResponseEntity.ok(RegistrationResponseBody.success());
     }
 }
