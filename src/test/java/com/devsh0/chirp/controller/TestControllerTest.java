@@ -1,6 +1,6 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.ChirpResponseBody;
+import com.devsh0.chirp.dto.TestResponse;
 import com.devsh0.chirp.util.Utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ class TestControllerTest {
     public void test() throws Exception {
         var response = mockMvc.perform(get("/api/v1/test")).andReturn().getResponse();
         assertEquals(response.getStatus(), MockHttpServletResponse.SC_OK);
-        var expectedResponseBody = Utils.fromJson(response.getContentAsString(), ChirpResponseBody.class);
-        assertEquals(expectedResponseBody, new ChirpResponseBody(true));
+        var expectedResponseBody = Utils.fromJson(response.getContentAsString(), TestResponse.class);
+        assertEquals(expectedResponseBody, new TestResponse(true));
     }
 }

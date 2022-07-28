@@ -3,46 +3,30 @@ package com.devsh0.chirp.dto;
 import com.devsh0.chirp.util.Utils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.validation.BindingResult;
-
 import java.util.Map;
-import java.util.Objects;
 
 @Getter
-public class RegistrationResponseBody extends ChirpResponseBody {
+@EqualsAndHashCode
+public class RegistrationResponse {
+    private final boolean success;
     private final Map<String, String> error;
 
     @JsonCreator
-    public RegistrationResponseBody(@JsonProperty("success") boolean success, @JsonProperty("error") Map<String, String> error) {
-        super(success);
+    public RegistrationResponse(@JsonProperty("success") boolean success, @JsonProperty("error") Map<String, String> error) {
+        this.success = success;
         this.error = error;
     }
 
-    public static RegistrationResponseBody success() {
-        return new RegistrationResponseBody(true, Utils.emptyMap());
+    public static RegistrationResponse success() {
+        return new RegistrationResponse(true, Utils.emptyMap());
     }
 
-    public static RegistrationResponseBody withBindingErrors(BindingResult bindingResult) {
+    public static RegistrationResponse withBindingErrors(BindingResult bindingResult) {
         Map<String, String> errorMap = Utils.emptyMap();
         bindingResult.getFieldErrors().forEach(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
-        return new RegistrationResponseBody(false, errorMap);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (this == other)
-            return true;
-        if (other == null || getClass() != other.getClass())
-            return false;
-        if (!super.equals(other))
-            return false;
-        RegistrationResponseBody that = (RegistrationResponseBody) other;
-        return error.equals(that.error);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), error);
+        return new RegistrationResponse(false, errorMap);
     }
 }

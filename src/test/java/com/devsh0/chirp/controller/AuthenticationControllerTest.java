@@ -1,7 +1,7 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.RegistrationRequestBody;
-import com.devsh0.chirp.dto.RegistrationResponseBody;
+import com.devsh0.chirp.dto.RegistrationRequest;
+import com.devsh0.chirp.dto.RegistrationResponse;
 import com.devsh0.chirp.util.Utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class AuthenticationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private MockHttpServletResponse registrationRequestHelper(RegistrationRequestBody requestStub) throws Exception {
+    private MockHttpServletResponse registrationRequestHelper(RegistrationRequest requestStub) throws Exception {
         return this.mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Utils.asJson(requestStub)))
@@ -31,42 +31,42 @@ class AuthenticationControllerTest {
 
     @Test
     public void registrationSucceedsOnValidInput() throws Exception {
-        var request = new RegistrationRequestBody("test@test.com", "user", "password");
+        var request = new RegistrationRequest("test@test.com", "user", "password");
         var response = registrationRequestHelper(request);
-        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
-        var expectedResponseBody = new RegistrationResponseBody(true, Utils.emptyMap());
+        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
+        var expectedResponseBody = new RegistrationResponse(true, Utils.emptyMap());
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_OK);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
 
     @Test
     public void registrationFailsOnInvalidEmail() throws Exception {
-        var request = new RegistrationRequestBody("test", "user", "password");
+        var request = new RegistrationRequest("test", "user", "password");
         var response = registrationRequestHelper(request);
-        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
-        var expectedResponseBody = new RegistrationResponseBody(false, Utils.mapFrom("email", "invalid email!").get());
+        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
+        var expectedResponseBody = new RegistrationResponse(false, Utils.mapFrom("email", "invalid email!").get());
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
 
     @Test
     public void registrationFailsOnInvalidUsername() throws Exception {
-        var request = new RegistrationRequestBody("test@mail.com", "us", "password");
+        var request = new RegistrationRequest("test@mail.com", "us", "password");
         var response = registrationRequestHelper(request);
-        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
+        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
         var errorMap = Utils.mapFrom("username", "username must be between 3 to 30 characters long!").get();
-        var expectedResponseBody = new RegistrationResponseBody(false, errorMap);
+        var expectedResponseBody = new RegistrationResponse(false, errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
 
     @Test
     public void registrationFailsOnInvalidPassword() throws Exception {
-        var request = new RegistrationRequestBody("test@mail.com", "user", "pass");
+        var request = new RegistrationRequest("test@mail.com", "user", "pass");
         var response = registrationRequestHelper(request);
-        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponseBody.class);
+        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
         var errorMap = Utils.mapFrom("password", "password must be at least 8 characters long!").get();
-        var expectedResponseBody = new RegistrationResponseBody(false, errorMap);
+        var expectedResponseBody = new RegistrationResponse(false, errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }

@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Data
-public class RegistrationRequestBody {
+public class RegistrationRequest {
     @Email(message = "invalid email!")
     private final String email;
 
