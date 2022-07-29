@@ -50,9 +50,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var token = tokenRepository.findByToken(tokenString);
         if (token == null)
             throw new TokenDoesNotExistException("this token does not exist!");
-        var expired = token.hasExpired();
-        if (expired)
+        if (token.hasExpired())
             throw new TokenExpiredException("token expired!");
+        activateAccount(token.getUserId());
     }
 
     @Override
@@ -79,5 +79,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .linkText("ACTIVATE")
                 .linkUrl(verificationUrl).build();
         emailService.sendEmail(user.getEmail(), "Chirp | Account Activation", emailTemplate.getHtml());
+    }
+
+    private void activateAccount(Long userId) {
+        userRepository.activateUser(userId);
     }
 }
