@@ -66,11 +66,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = User.builder().email(email).username(username).password(passwordEncoder.encode(password)).build();
         user = userRepository.save(user);
         var verificationToken = createVerificationToken(user);
-        sendConfirmationEmail(user, verificationToken.getToken());
+        sendVerificationEmail(user, verificationToken.getToken());
         return user;
     }
 
-    private void sendConfirmationEmail(User user, String token) throws IOException {
+    private void sendVerificationEmail(User user, String token) throws IOException {
         var verificationUrl = Utils.getRequestUrl().replace("register", "verify");
         verificationUrl = verificationUrl + "?token=" + token;
         var emailTemplate = EmailTemplate.builder()
