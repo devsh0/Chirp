@@ -1,6 +1,6 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.configure.JWTTokenUtils;
+import com.devsh0.chirp.util.JWTTokenUtils;
 import com.devsh0.chirp.dto.*;
 import com.devsh0.chirp.service.AuthenticationService;
 import lombok.AllArgsConstructor;

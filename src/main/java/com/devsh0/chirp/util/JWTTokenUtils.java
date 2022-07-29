@@ -1,13 +1,11 @@
-package com.devsh0.chirp.configure;
+package com.devsh0.chirp.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.devsh0.chirp.entity.User;
-import com.devsh0.chirp.util.ApplicationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
 import java.util.Calendar;
 
 @Component
