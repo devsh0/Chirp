@@ -1,24 +1,33 @@
 package com.devsh0.chirp.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
 public class VerificationResponse {
-    private final boolean success;
-    private final String message;
-    public VerificationResponse(@JsonProperty("success") boolean success, @JsonProperty("message") String message) {
+    private boolean success;
+    private String message;
+
+    public VerificationResponse() {
+
+    }
+
+    public VerificationResponse setSuccess(boolean success) {
         this.success = success;
+        return this;
+    }
+
+    public VerificationResponse setMessage(String message) {
         this.message = message;
+        return this;
     }
 
     public static VerificationResponse success() {
-        return new VerificationResponse(true, "token verified");
+        return new VerificationResponse().setSuccess(true).setMessage("token verified");
     }
 
     public static VerificationResponse failure(String message) {
-        return new VerificationResponse(false, message);
+        return new VerificationResponse().setSuccess(false).setMessage(message);
     }
 }
