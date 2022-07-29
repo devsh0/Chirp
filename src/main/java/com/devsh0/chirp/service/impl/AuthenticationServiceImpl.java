@@ -58,6 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public User register(String email, String username, String password) throws IOException {
         if (isEmailExists(email))
             throw new EmailExistsException( "an account exists with this email!");
