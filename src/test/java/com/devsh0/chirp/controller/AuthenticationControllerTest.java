@@ -107,10 +107,10 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    public void  tokenVerificationFailsOnExpiredTokens() throws Exception {
+    public void tokenVerificationFailsOnExpiredTokens() throws Exception {
         // Create a demo user.
         var demoUser = User.builder().email("test@test.com").username("test").password("password").build();
-        userRepository.save(demoUser);
+        demoUser = userRepository.save(demoUser);
 
         // Create an expired token.
         VerificationToken expiredToken = VerificationToken.generateToken(demoUser);
@@ -124,5 +124,28 @@ class AuthenticationControllerTest {
         var expectedResponseBody = VerificationResponse.failure("token expired!");
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_UNAUTHORIZED);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
+    }
+
+    @Test
+    public void tokenVerificationSucceedsAndAccountIsActivated() throws Exception {
+        // Create a demo user.
+        var demoUser = User.builder().email("test@test.com").username("test").password("password").build();
+        demoUser = userRepository.save(demoUser);
+        assertThat(demoUser.isActive()).isFalse();
+
+        // Create a valid token.
+        VerificationToken validToken = VerificationToken.generateToken(demoUser);
+        tokenRepository.save(validToken);
+
+        // Confirm that the token verification succeeds.
+        var response = tokenVerificationRequestHelper(validToken.getToken());
+        var responseBody = Utils.fromJson(response.getContentAsString(), VerificationResponse.class);
+        var expectedResponseBody = VerificationResponse.success();
+        assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_OK);
+        assertThat(responseBody).isEqualTo(expectedResponseBody);
+
+        // Confirm that the account is activated.
+        demoUser = userRepository.getReferenceById(demoUser.getId());
+        assertThat(demoUser.isActive()).isTrue();
     }
 }
