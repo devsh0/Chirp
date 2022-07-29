@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RegistrationAdvice {
     @ExceptionHandler(EmailExistsException.class)
     ResponseEntity<RegistrationResponse> handleEmailExists(EmailExistsException exc) {
-        var responseBody = new RegistrationResponse(false, Utils.mapFrom("email", exc.getMessage()).get());
+        var responseBody = new RegistrationResponse().setSuccess(false).setError(Utils.mapFrom("email", exc.getMessage()).get());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 
     @ExceptionHandler(UsernameExistsException.class)
     ResponseEntity<RegistrationResponse> handleUsernameExists(UsernameExistsException exc) {
-        var responseBody = new RegistrationResponse(false, Utils.mapFrom("username", exc.getMessage()).get());
+        var responseBody = new RegistrationResponse().setSuccess(false).setError(Utils.mapFrom("username", exc.getMessage()).get());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 }

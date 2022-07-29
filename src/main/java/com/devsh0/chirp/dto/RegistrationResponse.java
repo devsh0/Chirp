@@ -1,32 +1,38 @@
 package com.devsh0.chirp.dto;
 
 import com.devsh0.chirp.util.Utils;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.validation.BindingResult;
+
 import java.util.Map;
 
 @Getter
 @EqualsAndHashCode
 public class RegistrationResponse {
-    private final boolean success;
-    private final Map<String, String> error;
+    private boolean success;
+    private Map<String, String> error;
+    public RegistrationResponse() {
 
-    @JsonCreator
-    public RegistrationResponse(@JsonProperty("success") boolean success, @JsonProperty("error") Map<String, String> error) {
+    }
+
+    public RegistrationResponse setSuccess(boolean success) {
         this.success = success;
+        return this;
+    }
+
+    public RegistrationResponse setError(Map<String, String> error) {
         this.error = error;
+        return this;
     }
 
     public static RegistrationResponse success() {
-        return new RegistrationResponse(true, Utils.emptyMap());
+        return new RegistrationResponse().setSuccess(true).setError(Utils.emptyMap());
     }
 
     public static RegistrationResponse withBindingErrors(BindingResult bindingResult) {
         Map<String, String> errorMap = Utils.emptyMap();
         bindingResult.getFieldErrors().forEach(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
-        return new RegistrationResponse(false, errorMap);
+        return new RegistrationResponse().setSuccess(false).setError(errorMap);
     }
 }

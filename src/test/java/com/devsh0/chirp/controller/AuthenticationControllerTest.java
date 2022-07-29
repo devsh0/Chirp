@@ -56,7 +56,7 @@ class AuthenticationControllerTest {
         try {
             var response = registrationRequestHelper(request);
             var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
-            var expectedResponseBody = new RegistrationResponse(true, Utils.emptyMap());
+            var expectedResponseBody = new RegistrationResponse().setSuccess(true).setError(Utils.emptyMap());
             assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_OK);
             assertThat(responseBody).isEqualTo(expectedResponseBody);
         } catch (NestedServletException exc) {
@@ -70,7 +70,7 @@ class AuthenticationControllerTest {
         var request = new RegistrationRequest("test", "user", "password");
         var response = registrationRequestHelper(request);
         var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
-        var expectedResponseBody = new RegistrationResponse(false, Utils.mapFrom("email", "invalid email!").get());
+        var expectedResponseBody = new RegistrationResponse().setSuccess(false).setError(Utils.mapFrom("email", "invalid email!").get());
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
@@ -81,7 +81,7 @@ class AuthenticationControllerTest {
         var response = registrationRequestHelper(request);
         var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
         var errorMap = Utils.mapFrom("username", "username must be between 3 to 30 characters long!").get();
-        var expectedResponseBody = new RegistrationResponse(false, errorMap);
+        var expectedResponseBody = new RegistrationResponse().setSuccess(false).setError(errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
@@ -92,7 +92,7 @@ class AuthenticationControllerTest {
         var response = registrationRequestHelper(request);
         var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
         var errorMap = Utils.mapFrom("password", "password must be at least 8 characters long!").get();
-        var expectedResponseBody = new RegistrationResponse(false, errorMap);
+        var expectedResponseBody = new RegistrationResponse().setSuccess(false).setError(errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
