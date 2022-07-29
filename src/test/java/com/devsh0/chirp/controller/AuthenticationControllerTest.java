@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mail.MailSendException;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.NestedServletException;
+
+import java.sql.Date;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,14 +33,24 @@ class AuthenticationControllerTest {
                 .andReturn().getResponse();
     }
 
+    private MockHttpServletResponse tokenVerificationRequestHelper(String token) throws Exception {
+        return this.mockMvc.perform(get("/api/v1/auth/verify")
+                .param("token", token)).andReturn().getResponse();
+    }
+
     @Test
     public void registrationSucceedsOnValidInput() throws Exception {
         var request = new RegistrationRequest("test@test.com", "user", "password");
-        var response = registrationRequestHelper(request);
-        var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
-        var expectedResponseBody = new RegistrationResponse(true, Utils.emptyMap());
-        assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_OK);
-        assertThat(responseBody).isEqualTo(expectedResponseBody);
+        try {
+            var response = registrationRequestHelper(request);
+            var responseBody = Utils.fromJson(response.getContentAsString(), RegistrationResponse.class);
+            var expectedResponseBody = new RegistrationResponse(true, Utils.emptyMap());
+            assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_OK);
+            assertThat(responseBody).isEqualTo(expectedResponseBody);
+        } catch (NestedServletException exc) {
+            // We have temporarily changed smtp settings to prevent mail service from sending real mails.
+            assertThat(exc.getCause() instanceof MailSendException).isTrue();
+        }
     }
 
     @Test
