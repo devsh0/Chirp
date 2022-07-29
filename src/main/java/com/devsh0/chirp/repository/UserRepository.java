@@ -13,6 +13,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select user from User user where user.username=:username")
     Optional<User> findUserByUsername(String username);
 
+    @Query("select user from User user where user.email=:emailOrUsername or user.username=:emailOrUsername")
+    Optional<User> findByEmailOrUsername(String emailOrUsername);
+
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.active=1 where u.id=:userId")
     void activateUser(Long userId);

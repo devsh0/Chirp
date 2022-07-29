@@ -2,10 +2,7 @@ package com.devsh0.chirp.service.impl;
 
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.entity.VerificationToken;
-import com.devsh0.chirp.exception.EmailExistsException;
-import com.devsh0.chirp.exception.TokenDoesNotExistException;
-import com.devsh0.chirp.exception.TokenExpiredException;
-import com.devsh0.chirp.exception.UsernameExistsException;
+import com.devsh0.chirp.exception.*;
 import com.devsh0.chirp.other.EmailTemplate;
 import com.devsh0.chirp.repository.UserRepository;
 import com.devsh0.chirp.repository.VerificationTokenRepository;
@@ -55,6 +52,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (token.hasExpired())
             throw new TokenExpiredException("token expired!");
         activateAccount(token.getUserId());
+    }
+
+    @Override
+    public User login(String emailOrUsername, String password) {
+        User user = userRepository.findByEmailOrUsername(emailOrUsername).orElseThrow(() -> new LoginFailedException("incorrect username or password!"));
+        if (!user.isActive())
+            throw new PendingEmailVerificationException("email verification pending!");
+        if (!passwordEncoder.matches(password, user.getPassword()))
+            throw new LoginFailedException("incorrect username or password!");
+
+        // Redact the password before supplying the user object.
+        user.setPassword("");
+        return user;
     }
 
     @Override

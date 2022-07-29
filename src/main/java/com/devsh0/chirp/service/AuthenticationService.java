@@ -11,4 +11,6 @@ public interface AuthenticationService {
     User register(String email, String username, String password) throws IOException;
     VerificationToken createVerificationToken(User user);
     void verifyToken(String token);
+
+    User login(String emailOrUsername, String password);
 }
