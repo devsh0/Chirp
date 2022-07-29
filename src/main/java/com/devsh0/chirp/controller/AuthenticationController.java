@@ -43,7 +43,7 @@ public class AuthenticationController {
 
     @PostMapping("/test-login")
     public String testLogin(@RequestHeader("Authorization") String auth) {
-        String token = auth.substring(auth.indexOf("Bearer "));
+        String token = auth.substring("Bearer ".length());
         JWTTokenUtils.the().verifyToken(token);
         return "All good";
     }

@@ -7,6 +7,7 @@ import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.util.ApplicationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.Calendar;
 
 @Component
@@ -36,9 +37,8 @@ public class JWTTokenUtils {
      * @throws JWTVerificationException If token is not valid
      */
     public void verifyToken(String token) {
-
-        var verifier = JWT.require(JWT_ALGORITHM).build();
-        verifier.verify(token);
+        var decoded = JWT.decode(token);
+        JWT_ALGORITHM.verify(decoded);
     }
 
     public static JWTTokenUtils the() {
