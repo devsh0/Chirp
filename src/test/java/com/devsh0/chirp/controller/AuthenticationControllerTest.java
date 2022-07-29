@@ -2,6 +2,11 @@ package com.devsh0.chirp.controller;
 
 import com.devsh0.chirp.dto.RegistrationRequest;
 import com.devsh0.chirp.dto.RegistrationResponse;
+import com.devsh0.chirp.dto.VerificationResponse;
+import com.devsh0.chirp.entity.User;
+import com.devsh0.chirp.entity.VerificationToken;
+import com.devsh0.chirp.repository.UserRepository;
+import com.devsh0.chirp.repository.VerificationTokenRepository;
 import com.devsh0.chirp.util.Utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import org.springframework.web.util.NestedServletException;
 import java.sql.Date;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -25,6 +31,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class AuthenticationControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private MockHttpServletResponse registrationRequestHelper(RegistrationRequest requestStub) throws Exception {
         return this.mockMvc.perform(post("/api/v1/auth/register")
@@ -82,6 +94,35 @@ class AuthenticationControllerTest {
         var errorMap = Utils.mapFrom("password", "password must be at least 8 characters long!").get();
         var expectedResponseBody = new RegistrationResponse(false, errorMap);
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_BAD_REQUEST);
+        assertThat(responseBody).isEqualTo(expectedResponseBody);
+    }
+
+    @Test
+    public void tokenVerificationFailsOnNonExistentToken() throws Exception {
+        var response = tokenVerificationRequestHelper("non-existent-token");
+        var responseBody = Utils.fromJson(response.getContentAsString(), VerificationResponse.class);
+        var expectedResponseBody = VerificationResponse.failure("this token does not exist!");
+        assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_UNAUTHORIZED);
+        assertThat(responseBody).isEqualTo(expectedResponseBody);
+    }
+
+    @Test
+    public void  tokenVerificationFailsOnExpiredTokens() throws Exception {
+        // Create a demo user.
+        var demoUser = User.builder().email("test@test.com").username("test").password("password").build();
+        userRepository.save(demoUser);
+
+        // Create an expired token.
+        VerificationToken expiredToken = VerificationToken.generateToken(demoUser);
+        expiredToken.setExpiry(Date.valueOf("2020-01-01"));
+        tokenRepository.save(expiredToken);
+        assertThat(tokenRepository.findByToken(expiredToken.getToken())).isNotNull();
+
+        // Confirm that the token verification fails.
+        var response = tokenVerificationRequestHelper(expiredToken.getToken());
+        var responseBody = Utils.fromJson(response.getContentAsString(), VerificationResponse.class);
+        var expectedResponseBody = VerificationResponse.failure("token expired!");
+        assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_UNAUTHORIZED);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
 }

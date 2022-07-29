@@ -1,13 +1,15 @@
 package com.devsh0.chirp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class VerificationResponse {
     private final boolean success;
     private final String message;
-    public VerificationResponse(@JsonProperty("success") boolean success, @JsonProperty String message) {
+    public VerificationResponse(@JsonProperty("success") boolean success, @JsonProperty("message") String message) {
         this.success = success;
         this.message = message;
     }
