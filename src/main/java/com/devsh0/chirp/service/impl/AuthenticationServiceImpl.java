@@ -15,6 +15,7 @@ import com.devsh0.chirp.util.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -46,6 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public void verifyToken(String tokenString) {
         var token = tokenRepository.findByToken(tokenString);
         if (token == null)
