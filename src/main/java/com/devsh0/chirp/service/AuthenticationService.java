@@ -3,6 +3,7 @@ package com.devsh0.chirp.service;
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.entity.VerificationToken;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public interface AuthenticationService {
