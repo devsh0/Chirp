@@ -14,7 +14,7 @@ public class EmailTemplate {
     private String linkText;
     private String linkUrl;
 
-    public String getHtml() throws IOException {
+    public String getHtml() {
         var html = Utils.getTemplateResource("email-template.html");
         html = html.replace("{{action_header}}", actionHeader);
         html = html.replace("{{action_text}}", actionText);
