@@ -36,9 +36,8 @@ public class AuthenticationController {
     @ResponseBody
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        var user = authenticationService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        var token = JWTTokenUtils.the().generateToken(user);
-        return ResponseEntity.ok().body(LoginResponse.success(user.getUsername(), token));
+        String jwtToken = authenticationService.login(loginRequest.getUser(), loginRequest.getPassword());
+        return ResponseEntity.ok().body(LoginResponse.success(loginRequest.getUser(), jwtToken));
     }
 
     @PostMapping("/test-login")

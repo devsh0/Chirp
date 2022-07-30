@@ -13,5 +13,7 @@ public interface AuthenticationService {
     VerificationToken createVerificationToken(User user);
     void verifyToken(String token);
 
-    User login(String emailOrUsername, String password);
+    String login(String emailOrUsername, String password);
+
+    void authenticate(HttpServletRequest request);
 }
