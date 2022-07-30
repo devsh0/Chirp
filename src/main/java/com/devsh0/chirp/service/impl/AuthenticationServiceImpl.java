@@ -8,12 +8,14 @@ import com.devsh0.chirp.repository.UserRepository;
 import com.devsh0.chirp.repository.VerificationTokenRepository;
 import com.devsh0.chirp.service.AuthenticationService;
 import com.devsh0.chirp.service.EmailService;
+import com.devsh0.chirp.util.JWTTokenUtils;
 import com.devsh0.chirp.util.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Service
@@ -48,32 +50,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void verifyToken(String tokenString) {
         var token = tokenRepository.findByToken(tokenString);
         if (token == null)
-            throw new TokenDoesNotExistException("this token does not exist!");
+            throw new TokenDoesNotExistException("token does not exist!");
         if (token.hasExpired())
             throw new TokenExpiredException("token expired!");
         activateAccount(token.getUserId());
     }
 
     @Override
-    public User login(String emailOrUsername, String password) {
-        User user = userRepository.findByEmailOrUsername(emailOrUsername).orElseThrow(() -> new LoginFailedException("incorrect username or password!"));
+    public String login(String emailOrUsername, String password) {
+        User user = userRepository.findByEmailOrUsername(emailOrUsername).orElseThrow(
+                () -> new LoginFailedException("invalid credentials!"));
         if (!user.isActive())
             throw new PendingEmailVerificationException("email verification pending!");
         if (!passwordEncoder.matches(password, user.getPassword()))
-            throw new LoginFailedException("incorrect username or password!");
+            throw new LoginFailedException("invalid credentials!");
+        return JWTTokenUtils.the().generateToken(user);
+    }
 
-        // Redact the password before supplying the user object.
-        user.setPassword("");
-        return user;
+    @Override
+    public void authenticate(HttpServletRequest request) {
+        String jwtToken = request.getHeader("Authorization");
+        if (jwtToken == null || jwtToken.isBlank())
+            throw new AuthenticationFailedException("authentication failed!");
+        String token = jwtToken.replace("Bearer ", "");
+        JWTTokenUtils.the().verifyToken(token);
     }
 
     @Override
     @Transactional
-    public User register(String email, String username, String password) throws IOException {
+    public User register(String email, String username, String password) {
         if (isEmailExists(email))
-            throw new EmailExistsException( "an account exists with this email!");
+            throw new EmailExistsException("email already in use!");
         if (isUsernameExists(username))
-            throw new UsernameExistsException("this username is taken!");
+            throw new UsernameExistsException("username already in use!");
 
         // Store user in database, create verification token, and send the confirmation email.
         var user = User.builder().email(email).username(username).password(passwordEncoder.encode(password)).build();
@@ -83,7 +92,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return user;
     }
 
-    private void sendVerificationEmail(User user, String token) throws IOException {
+    private void sendVerificationEmail(User user, String token) {
         var verificationUrl = Utils.getRequestUrl().replace("register", "verify");
         verificationUrl = verificationUrl + "?token=" + token;
         var emailTemplate = EmailTemplate.builder()
