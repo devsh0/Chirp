@@ -3,10 +3,13 @@ package com.devsh0.chirp.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.devsh0.chirp.entity.User;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.Calendar;
+import java.util.HashMap;
 
 @Component
 public class JWTTokenUtils {
@@ -31,12 +34,22 @@ public class JWTTokenUtils {
                 .sign(JWT_ALGORITHM);
     }
 
+    public boolean isTokenExpired(DecodedJWT decoded) throws Exception {
+        var payloadJson = new String(Base64.getDecoder().decode(decoded.getPayload()));
+        var payload = (HashMap) Utils.fromJson(payloadJson, HashMap.class);
+        var expiryInt = (Integer)payload.get("exp");
+        var expiry = expiryInt.longValue() * 1000;
+        return System.currentTimeMillis() > expiry;
+    }
+
     /**
      * @throws JWTVerificationException If token is not valid
      */
-    public void verifyToken(String token) {
-        var decoded = JWT.decode(token);
-        JWT_ALGORITHM.verify(decoded);
+    public void verifyToken(String token) throws Exception {
+        var decodedJWT = JWT.decode(token);
+        if (isTokenExpired(decodedJWT))
+            throw new JWTVerificationException("token expired!");
+        JWT_ALGORITHM.verify(decodedJWT);
     }
 
     public static JWTTokenUtils the() {

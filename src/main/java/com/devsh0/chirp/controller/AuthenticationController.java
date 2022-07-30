@@ -42,7 +42,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/test-login")
-    public String testLogin(@RequestHeader("Authorization") String auth) {
+    public String testLogin(@RequestHeader("Authorization") String auth) throws Exception {
         String token = auth.substring("Bearer ".length());
         JWTTokenUtils.the().verifyToken(token);
         return "All good";
