@@ -1,8 +1,10 @@
 package com.devsh0.chirp.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode
 public class LoginResponse {
     private boolean success;
     private String message;
