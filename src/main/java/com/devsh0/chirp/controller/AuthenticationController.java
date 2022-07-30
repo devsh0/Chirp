@@ -54,6 +54,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(PasswordResetResponse.success());
     }
 
+    @ResponseBody
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
+        authenticationService.logout(request);
+        return ResponseEntity.ok().body(LogoutResponse.success());
+    }
     @PostMapping("/test-login")
     public String testLogin(HttpServletRequest request) {
         authenticationService.authenticate(request);

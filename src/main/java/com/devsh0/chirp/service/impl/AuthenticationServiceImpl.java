@@ -1,9 +1,11 @@
 package com.devsh0.chirp.service.impl;
 
+import com.devsh0.chirp.entity.BlockedJWTToken;
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.entity.VerificationToken;
 import com.devsh0.chirp.exception.*;
 import com.devsh0.chirp.other.EmailTemplate;
+import com.devsh0.chirp.repository.JWTTokenBlocklistRepository;
 import com.devsh0.chirp.repository.UserRepository;
 import com.devsh0.chirp.repository.VerificationTokenRepository;
 import com.devsh0.chirp.service.AuthenticationService;
@@ -23,6 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final EmailService emailService;
     private final UserRepository userRepository;
     private final VerificationTokenRepository tokenRepository;
+    private JWTTokenBlocklistRepository blocklistJWTTokenRepository;
 
     @Override
     public boolean isEmailExists(String email) {
@@ -66,9 +69,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    public void logout(HttpServletRequest request) {
+        String jwtToken = authenticate(request);
+        blocklistJWTTokenRepository.save(BlockedJWTToken.from(jwtToken));
+    }
+
+    @Override
     public String authenticate(HttpServletRequest request) {
         String jwtToken = request.getHeader("Authorization");
         if (jwtToken == null || jwtToken.isBlank())
+            throw new AuthenticationFailedException("authentication failed!");
+        var tokenOrEmpty = blocklistJWTTokenRepository.findByToken(jwtToken);
+        if (tokenOrEmpty.isPresent())
             throw new AuthenticationFailedException("authentication failed!");
         String token = jwtToken.replace("Bearer ", "");
         JWTTokenUtils.the().verifyToken(token);
