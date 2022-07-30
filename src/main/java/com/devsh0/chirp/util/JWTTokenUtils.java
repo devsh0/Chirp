@@ -57,6 +57,11 @@ public class JWTTokenUtils {
         }
     }
 
+    public String getSubject(String token) {
+        var decodedJWT = JWT.decode(token);
+        return decodedJWT.getSubject();
+    }
+
     public static JWTTokenUtils the() {
         return INSTANCE;
     }

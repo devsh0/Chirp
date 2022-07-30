@@ -66,12 +66,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void authenticate(HttpServletRequest request) {
+    public String authenticate(HttpServletRequest request) {
         String jwtToken = request.getHeader("Authorization");
         if (jwtToken == null || jwtToken.isBlank())
             throw new AuthenticationFailedException("authentication failed!");
         String token = jwtToken.replace("Bearer ", "");
         JWTTokenUtils.the().verifyToken(token);
+        return token;
     }
 
     @Override
@@ -88,6 +89,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var verificationToken = createVerificationToken(user);
         sendVerificationEmail(user, verificationToken.getToken());
         return user;
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(String oldPassword, String newPassword, HttpServletRequest request) {
+        String jwtToken = authenticate(request);
+        String username = JWTTokenUtils.the().getSubject(jwtToken);
+        var userOrEmpty = userRepository.findUserByUsername(username);
+
+        if (userOrEmpty.isEmpty())
+            throw new IllegalStateException("password reset requested by unknown user!");
+        var user = userOrEmpty.get();
+        if (!passwordEncoder.matches(oldPassword, user.getPassword()))
+            throw new InvalidOldPasswordException("old password is invalid!");
+
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userRepository.resetPassword(user.getId(), encodedPassword);
+        // Fixme: Maybe we should log the user out after password change.
     }
 
     private void sendVerificationEmail(User user, String token) {

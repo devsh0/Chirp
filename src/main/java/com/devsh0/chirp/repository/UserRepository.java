@@ -19,4 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.active=1 where u.id=:userId")
     void activateUser(Long userId);
+
+    @Modifying
+    @Query("update User u set u.password=:password where u.id=:userId")
+    void resetPassword(Long userId, String password);
 }

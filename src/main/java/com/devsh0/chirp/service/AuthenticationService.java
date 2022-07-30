@@ -15,5 +15,7 @@ public interface AuthenticationService {
 
     String login(String emailOrUsername, String password);
 
-    void authenticate(HttpServletRequest request);
+    String authenticate(HttpServletRequest request);
+
+    void resetPassword(String oldPassword, String newPassword, HttpServletRequest request);
 }
