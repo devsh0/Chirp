@@ -118,7 +118,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String encodedPassword = passwordEncoder.encode(newPassword);
         userRepository.resetPassword(user.getId(), encodedPassword);
-        // Fixme: Maybe we should log the user out after password change.
+        // Save the current token to blocklist. Effectively this will log out the user.
+        blocklistJWTTokenRepository.save(BlockedJWTToken.from(jwtToken));
     }
 
     private void sendVerificationEmail(User user, String token) {
