@@ -60,6 +60,23 @@ public class AuthenticationController {
         authenticationService.logout(request);
         return ResponseEntity.ok().body(LogoutResponse.success());
     }
+
+    @ResponseBody
+    @RequestMapping("/recover-password")
+    public ResponseEntity<PasswordRecoveryResponse> recoverPassword(@Valid @RequestBody PasswordRecoveryRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PasswordRecoveryResponse.withBindingErrors(bindingResult));
+        authenticationService.recoverPassword(request.getEmail());
+        return ResponseEntity.ok(PasswordRecoveryResponse.success());
+    }
+
+    // TODO: Continue here.
+    /*@ResponseBody
+    @RequestMapping("/create-password")
+    public ResponseEntity<CreateNewPasswordResponse> createNewPassword(@RequestParam String token) {
+
+    }*/
+
     @PostMapping("/test-login")
     public String testLogin(HttpServletRequest request) {
         authenticationService.authenticate(request);

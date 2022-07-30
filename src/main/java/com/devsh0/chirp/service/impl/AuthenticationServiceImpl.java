@@ -122,6 +122,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         blocklistJWTTokenRepository.save(BlockedJWTToken.from(jwtToken));
     }
 
+    @Override
+    @Transactional
+    public void recoverPassword(String email) {
+        var userOrEmpty = userRepository.findUserByEmail(email);
+        if (userOrEmpty.isEmpty())
+            throw new UserDoesNotExistException("no user exists with this email!");
+        var user = userOrEmpty.get();
+        var verificationToken = createVerificationToken(user);
+        sendPasswordRecoveryEmail(user, verificationToken.getToken());
+    }
+
     private void sendVerificationEmail(User user, String token) {
         var verificationUrl = Utils.getRequestUrl().replace("register", "verify");
         verificationUrl = verificationUrl + "?token=" + token;
@@ -131,6 +142,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .linkText("ACTIVATE")
                 .linkUrl(verificationUrl).build();
         emailService.sendEmail(user.getEmail(), "Chirp | Account Activation", emailTemplate.getHtml());
+    }
+
+    private void sendPasswordRecoveryEmail(User user, String token) {
+        var recoveryUrl = Utils.getRequestUrl().replace("recover-password", "create-password");
+        recoveryUrl = recoveryUrl + "?token=" + token;
+        var emailTemplate = EmailTemplate.builder()
+                .actionHeader("Reset password")
+                .actionText("A password reset request was initiated for this email! Follow the link to continue:")
+                .linkText("RESET")
+                .linkUrl(recoveryUrl).build();
+        emailService.sendEmail(user.getEmail(), "Chirp | Password Recovery", emailTemplate.getHtml());
     }
 
     private void activateAccount(Long userId) {
