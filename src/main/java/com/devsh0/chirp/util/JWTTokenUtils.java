@@ -46,11 +46,15 @@ public class JWTTokenUtils {
     /**
      * @throws JWTVerificationException If token is not valid
      */
-    public void verifyToken(String token) throws Exception {
-        var decodedJWT = JWT.decode(token);
-        if (isTokenExpired(decodedJWT))
-            throw new JWTVerificationException("token expired!");
-        JWT_ALGORITHM.verify(decodedJWT);
+    public void verifyToken(String token) {
+        try {
+            var decodedJWT = JWT.decode(token);
+            if (isTokenExpired(decodedJWT))
+                throw new AuthenticationFailedException("token expired!");
+            JWT_ALGORITHM.verify(decodedJWT);
+        } catch (JWTVerificationException exc) {
+            throw new AuthenticationFailedException("authentication failed!");
+        }
     }
 
     public static JWTTokenUtils the() {
