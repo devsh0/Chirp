@@ -50,6 +50,11 @@ class AuthenticationControllerTest {
                 .param("token", token)).andReturn().getResponse();
     }
 
+    private User createActivatedUser() {
+        var user = User.builder().build();
+        user.
+    }
+
     @Test
     public void registrationSucceedsOnValidInput() throws Exception {
         var request = new RegistrationRequest("test@test.com", "user", "password");
@@ -101,7 +106,7 @@ class AuthenticationControllerTest {
     public void tokenVerificationFailsOnNonExistentToken() throws Exception {
         var response = tokenVerificationRequestHelper("non-existent-token");
         var responseBody = Utils.fromJson(response.getContentAsString(), VerificationResponse.class);
-        var expectedResponseBody = VerificationResponse.failure("this token does not exist!");
+        var expectedResponseBody = VerificationResponse.failure("token does not exist!");
         assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_UNAUTHORIZED);
         assertThat(responseBody).isEqualTo(expectedResponseBody);
     }
