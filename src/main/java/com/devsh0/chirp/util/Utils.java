@@ -37,12 +37,20 @@ public class Utils {
         return new MapBuilder<>(key, value);
     }
 
-    public static String asJson(Object object) throws Exception {
-        return jsonMapper.writeValueAsString(object);
+    public static String asJson(Object object) {
+        try {
+            return jsonMapper.writeValueAsString(object);
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 
-    public static Object fromJson(String json, Class<?> klass) throws Exception {
-        return jsonMapper.readValue(json, klass);
+    public static Object fromJson(String json, Class<?> klass) {
+        try {
+            return jsonMapper.readValue(json, klass);
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 
     public static String getRequestUrl() {
@@ -50,9 +58,13 @@ public class Utils {
         return request.getRequestURL().toString();
     }
 
-    public static String getTemplateResource(String templateName) throws IOException {
-        String path = "templates/" + templateName;
-        var templateResource = new ClassPathResource(path);
-        return new String(templateResource.getInputStream().readAllBytes());
+    public static String getTemplateResource(String templateName) {
+        try {
+            String path = "templates/" + templateName;
+            var templateResource = new ClassPathResource(path);
+            return new String(templateResource.getInputStream().readAllBytes());
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 }

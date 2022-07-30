@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.devsh0.chirp.entity.User;
+import com.devsh0.chirp.exception.AuthenticationFailedException;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -34,10 +35,10 @@ public class JWTTokenUtils {
                 .sign(JWT_ALGORITHM);
     }
 
-    public boolean isTokenExpired(DecodedJWT decoded) throws Exception {
-        var payloadJson = new String(Base64.getDecoder().decode(decoded.getPayload()));
+    public boolean isTokenExpired(DecodedJWT decodedJWT) {
+        var payloadJson = new String(Base64.getDecoder().decode(decodedJWT.getPayload()));
         var payload = (HashMap) Utils.fromJson(payloadJson, HashMap.class);
-        var expiryInt = (Integer)payload.get("exp");
+        var expiryInt = (Integer) payload.get("exp");
         var expiry = expiryInt.longValue() * 1000;
         return System.currentTimeMillis() > expiry;
     }
