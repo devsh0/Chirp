@@ -63,7 +63,7 @@ public class AuthenticationController {
     }
 
     @ResponseBody
-    @GetMapping("/recover-password")
+    @PostMapping("/recover-password")
     public ResponseEntity<BasicResponse> recoverPassword(@Valid @RequestBody PasswordRecoveryRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BasicResponse.withBindingErrors(bindingResult));
