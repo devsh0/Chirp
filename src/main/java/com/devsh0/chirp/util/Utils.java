@@ -27,6 +27,10 @@ public class Utils {
         public Map<T, V> get() {
             return map;
         }
+
+        public String asJson() {
+            return Utils.asJson(map);
+        }
     }
 
     public static <T, V> Map<T, V> emptyMap() {
