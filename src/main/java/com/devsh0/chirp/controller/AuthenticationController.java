@@ -38,7 +38,7 @@ public class AuthenticationController {
 
     @ResponseBody
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         String jwtToken = authenticationService.login(loginRequest.getUser(), loginRequest.getPassword());
         return ResponseEntity.ok().body(LoginResponse.success(loginRequest.getUser(), jwtToken));
     }
