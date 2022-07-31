@@ -23,7 +23,7 @@ public class LoginResponse {
     }
 
     public static LoginResponse success(String username, String token) {
-        return new LoginResponse(true, username, token, "login success");
+        return new LoginResponse(true, username, token, "logged in successfully");
     }
 
     public static LoginResponse failure(String message) {
