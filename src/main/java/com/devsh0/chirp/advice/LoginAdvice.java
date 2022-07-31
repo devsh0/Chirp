@@ -1,6 +1,6 @@
 package com.devsh0.chirp.advice;
 
-import com.devsh0.chirp.dto.LoginResponse;
+import com.devsh0.chirp.dto.response.LoginResponse;
 import com.devsh0.chirp.exception.LoginFailedException;
 import com.devsh0.chirp.exception.PendingEmailVerificationException;
 import org.springframework.http.HttpStatus;

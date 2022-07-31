@@ -1,4 +1,4 @@
-package com.devsh0.chirp.dto;
+package com.devsh0.chirp.dto.response;
 
 import lombok.Data;
 import org.springframework.validation.BindingResult;

@@ -1,6 +1,6 @@
 package com.devsh0.chirp.advice;
 
-import com.devsh0.chirp.dto.PasswordResetResponse;
+import com.devsh0.chirp.dto.response.PasswordResetResponse;
 import com.devsh0.chirp.exception.InvalidOldPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.TestResponse;
+import com.devsh0.chirp.dto.response.TestResponse;
 import com.devsh0.chirp.util.Utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

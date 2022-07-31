@@ -1,6 +1,6 @@
 package com.devsh0.chirp.advice;
 
-import com.devsh0.chirp.dto.PasswordRecoveryResponse;
+import com.devsh0.chirp.dto.response.PasswordRecoveryResponse;
 import com.devsh0.chirp.exception.UserDoesNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

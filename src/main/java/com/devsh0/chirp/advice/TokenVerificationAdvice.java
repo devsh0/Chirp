@@ -1,6 +1,6 @@
 package com.devsh0.chirp.advice;
 
-import com.devsh0.chirp.dto.VerificationResponse;
+import com.devsh0.chirp.dto.response.VerificationResponse;
 import com.devsh0.chirp.exception.TokenDoesNotExistException;
 import com.devsh0.chirp.exception.TokenExpiredException;
 import org.springframework.http.HttpStatus;

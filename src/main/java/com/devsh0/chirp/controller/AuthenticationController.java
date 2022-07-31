@@ -1,6 +1,7 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.*;
+import com.devsh0.chirp.dto.request.*;
+import com.devsh0.chirp.dto.response.*;
 import com.devsh0.chirp.service.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

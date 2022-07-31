@@ -1,4 +1,4 @@
-package com.devsh0.chirp.dto;
+package com.devsh0.chirp.dto.response;
 
 import com.devsh0.chirp.util.Utils;
 import lombok.EqualsAndHashCode;

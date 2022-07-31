@@ -1,7 +1,7 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.RegistrationRequest;
-import com.devsh0.chirp.dto.RegistrationResponse;
+import com.devsh0.chirp.dto.request.RegistrationRequest;
+import com.devsh0.chirp.dto.response.RegistrationResponse;
 import com.devsh0.chirp.entity.User;
 import com.devsh0.chirp.service.AuthenticationService;
 import com.devsh0.chirp.util.Utils;

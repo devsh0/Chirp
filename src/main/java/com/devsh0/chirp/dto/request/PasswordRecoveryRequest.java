@@ -1,4 +1,4 @@
-package com.devsh0.chirp.dto;
+package com.devsh0.chirp.dto.request;
 
 import lombok.Data;
 import lombok.Getter;

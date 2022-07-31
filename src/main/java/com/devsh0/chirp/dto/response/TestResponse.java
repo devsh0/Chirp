@@ -1,4 +1,4 @@
-package com.devsh0.chirp.dto;
+package com.devsh0.chirp.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

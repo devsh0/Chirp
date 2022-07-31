@@ -1,6 +1,6 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.TestResponse;
+import com.devsh0.chirp.dto.response.TestResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

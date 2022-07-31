@@ -1,6 +1,6 @@
 package com.devsh0.chirp.advice;
 
-import com.devsh0.chirp.dto.RegistrationResponse;
+import com.devsh0.chirp.dto.response.RegistrationResponse;
 import com.devsh0.chirp.exception.EmailExistsException;
 import com.devsh0.chirp.exception.UsernameExistsException;
 import com.devsh0.chirp.util.Utils;
