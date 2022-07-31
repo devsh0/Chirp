@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class CreateNewPasswordRequest {
-    @NotBlank
+    @NotBlank(message = "password must not be blank!")
     @Size(min = 8, message = "password must be at least 8 characters long!")
     private String newPassword;
 
