@@ -48,12 +48,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public void verifyToken(String tokenString) {
-        var token = tokenRepository.findByToken(tokenString);
-        if (token == null)
+    public VerificationToken verifyToken(String tokenString) {
+        var tokenOrNull = tokenRepository.findByToken(tokenString);
+        if (tokenOrNull.isEmpty())
             throw new TokenDoesNotExistException("token does not exist!");
+        var token = tokenOrNull.get();
         if (token.hasExpired())
             throw new TokenExpiredException("token expired!");
+        return token;
+    }
+
+    @Override
+    public void verifyTokenAndActivateAccount(String tokenString) {
+        var token = verifyToken(tokenString);
         activateAccount(token.getUserId());
     }
 
@@ -119,6 +126,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String encodedPassword = passwordEncoder.encode(newPassword);
         userRepository.resetPassword(user.getId(), encodedPassword);
         // Save the current token to blocklist. Effectively this will log out the user.
+        // Fixme: We should block all tokens issued by this user. That will log the user out from every device.
         blocklistJWTTokenRepository.save(BlockedJWTToken.from(jwtToken));
     }
 
@@ -133,6 +141,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         sendPasswordRecoveryEmail(user, verificationToken.getToken());
     }
 
+    @Override
+    @Transactional
+    public void createNewPassword(String password, String tokenString) {
+        var token = verifyToken(tokenString);
+        Long userId = token.getUserId();
+        String encodedPassword = passwordEncoder.encode(password);
+        userRepository.resetPassword(userId, encodedPassword);
+        tokenRepository.deleteToken(tokenString);
+    }
+
     private void sendVerificationEmail(User user, String token) {
         var verificationUrl = Utils.getRequestUrl().replace("register", "verify");
         verificationUrl = verificationUrl + "?token=" + token;
@@ -145,7 +163,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void sendPasswordRecoveryEmail(User user, String token) {
-        var recoveryUrl = Utils.getRequestUrl().replace("recover-password", "create-password");
+        // Fixme: The user will click the link in the email to reset password. Clicking the link will make a GET request.
+        //  The recovery URL should refer to a page that presents a password reset form. The password changing form in that
+        //  page should refer to /api/v1/auth/create-new-password and supply the new password AND the token. We are not sure
+        //  what the URL for that page should be, temporarily we are targeting a URL that does not exit. We'll have to come
+        //  back to it at some point.
+        var recoveryUrl = Utils.getRequestUrl().replace("recover-password", "verify-password-recovery");
         recoveryUrl = recoveryUrl + "?token=" + token;
         var emailTemplate = EmailTemplate.builder()
                 .actionHeader("Reset password")

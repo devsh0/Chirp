@@ -30,7 +30,7 @@ public class AuthenticationController {
     @ResponseBody
     @RequestMapping("/verify")
     public ResponseEntity<VerificationResponse> verifyToken(@RequestParam String token) {
-        authenticationService.verifyToken(token);
+        authenticationService.verifyTokenAndActivateAccount(token);
         return ResponseEntity.ok(VerificationResponse.success());
     }
 
@@ -70,12 +70,14 @@ public class AuthenticationController {
         return ResponseEntity.ok(PasswordRecoveryResponse.success());
     }
 
-    // TODO: Continue here.
-    /*@ResponseBody
-    @RequestMapping("/create-password")
-    public ResponseEntity<CreateNewPasswordResponse> createNewPassword(@RequestParam String token) {
-
-    }*/
+    @ResponseBody
+    @PostMapping("/create-new-password")
+    public ResponseEntity<PasswordResetResponse> createNewPassword(@Valid @RequestBody CreateNewPasswordRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PasswordResetResponse.withBindingErrors(bindingResult));
+        authenticationService.createNewPassword(request.getNewPassword(), request.getToken());
+        return ResponseEntity.ok().body(PasswordResetResponse.success());
+    }
 
     @PostMapping("/test-login")
     public String testLogin(HttpServletRequest request) {

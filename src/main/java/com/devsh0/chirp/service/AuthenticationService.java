@@ -11,11 +11,12 @@ public interface AuthenticationService {
     boolean isUsernameExists(String username);
     User register(String email, String username, String password) throws IOException;
     VerificationToken createVerificationToken(User user);
-    void verifyToken(String token);
+    VerificationToken verifyToken(String token);
+    void verifyTokenAndActivateAccount(String token);
     String login(String emailOrUsername, String password);
     void logout(HttpServletRequest request);
     String authenticate(HttpServletRequest request);
     void resetPassword(String oldPassword, String newPassword, HttpServletRequest request);
-
     void recoverPassword(String email);
+    void createNewPassword(String password, String token);
 }
