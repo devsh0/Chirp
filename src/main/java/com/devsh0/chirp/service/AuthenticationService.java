@@ -14,9 +14,9 @@ public interface AuthenticationService {
     VerificationToken verifyToken(String token);
     void verifyTokenAndActivateAccount(String token);
     String login(String emailOrUsername, String password);
-    void logout(HttpServletRequest request);
-    String authenticate(HttpServletRequest request);
-    void resetPassword(String oldPassword, String newPassword, HttpServletRequest request);
+    void logout(String authToken);
+    String authenticate(String authToken);
+    void resetPassword(String oldPassword, String newPassword, String authToken);
     void recoverPassword(String email);
     void createNewPassword(String password, String token);
 }

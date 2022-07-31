@@ -76,20 +76,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout(HttpServletRequest request) {
-        String jwtToken = authenticate(request);
+    public void logout(String authToken) {
+        String jwtToken = authenticate(authToken);
         blocklistJWTTokenRepository.save(BlockedJWTToken.from(jwtToken));
     }
 
     @Override
-    public String authenticate(HttpServletRequest request) {
-        String jwtToken = request.getHeader("Authorization");
-        if (jwtToken == null || jwtToken.isBlank())
-            throw new AuthenticationFailedException("authentication failed!");
-        var tokenOrEmpty = blocklistJWTTokenRepository.findByToken(jwtToken);
+    public String authenticate(String authToken) {
+        var tokenOrEmpty = blocklistJWTTokenRepository.findByToken(authToken);
         if (tokenOrEmpty.isPresent())
             throw new AuthenticationFailedException("authentication failed!");
-        String token = jwtToken.replace("Bearer ", "");
+        String token = authToken.replace("Bearer ", "");
         JWTTokenUtils.the().verifyToken(token);
         return token;
     }
@@ -112,8 +109,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public void resetPassword(String oldPassword, String newPassword, HttpServletRequest request) {
-        String jwtToken = authenticate(request);
+    public void resetPassword(String oldPassword, String newPassword, String authToken) {
+        String jwtToken = authenticate(authToken);
         String username = JWTTokenUtils.the().getSubject(jwtToken);
         var userOrEmpty = userRepository.findUserByUsername(username);
 

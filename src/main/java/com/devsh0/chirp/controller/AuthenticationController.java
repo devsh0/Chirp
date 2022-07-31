@@ -1,7 +1,9 @@
 package com.devsh0.chirp.controller;
 
 import com.devsh0.chirp.dto.request.*;
-import com.devsh0.chirp.dto.response.*;
+import com.devsh0.chirp.dto.response.BasicResponse;
+import com.devsh0.chirp.dto.response.LoginResponse;
+import com.devsh0.chirp.dto.response.RegistrationResponse;
 import com.devsh0.chirp.service.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -45,20 +46,19 @@ public class AuthenticationController {
     @ResponseBody
     @PostMapping("/reset-password")
     public ResponseEntity<BasicResponse> resetPassword(
+            @RequestHeader("Authorization") String authToken,
             @Valid @RequestBody PasswordResetRequest resetDto,
-            BindingResult bindingResult,
-            HttpServletRequest httpRequest
-    ) {
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BasicResponse.withBindingErrors(bindingResult));
-        authenticationService.resetPassword(resetDto.getOldPassword(), resetDto.getNewPassword(), httpRequest);
+        authenticationService.resetPassword(resetDto.getOldPassword(), resetDto.getNewPassword(), authToken);
         return ResponseEntity.ok(BasicResponse.success("password successfully reset"));
     }
 
     @ResponseBody
     @PostMapping("/logout")
-    public ResponseEntity<BasicResponse> logout(HttpServletRequest request) {
-        authenticationService.logout(request);
+    public ResponseEntity<BasicResponse> logout(@RequestHeader("Authorization") String authToken) {
+        authenticationService.logout(authToken);
         return ResponseEntity.ok().body(BasicResponse.success("logged out successfully"));
     }
 
@@ -81,8 +81,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/test-login")
-    public String testLogin(HttpServletRequest request) {
-        authenticationService.authenticate(request);
+    public String testLogin(@RequestHeader("Authorization") String authToken) {
+        authenticationService.authenticate(authToken);
         return "All good";
     }
 }
