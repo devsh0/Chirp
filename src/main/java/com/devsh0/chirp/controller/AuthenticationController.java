@@ -30,9 +30,9 @@ public class AuthenticationController {
 
     @ResponseBody
     @RequestMapping("/verify")
-    public ResponseEntity<VerificationResponse> verifyToken(@RequestParam String token) {
+    public ResponseEntity<BasicResponse> verifyToken(@RequestParam String token) {
         authenticationService.verifyTokenAndActivateAccount(token);
-        return ResponseEntity.ok(VerificationResponse.success());
+        return ResponseEntity.ok(BasicResponse.success("token verified"));
     }
 
     @ResponseBody
@@ -44,40 +44,40 @@ public class AuthenticationController {
 
     @ResponseBody
     @PostMapping("/reset-password")
-    public ResponseEntity<PasswordResetResponse> resetPassword(
+    public ResponseEntity<BasicResponse> resetPassword(
             @Valid @RequestBody PasswordResetRequest resetDto,
             BindingResult bindingResult,
             HttpServletRequest httpRequest
     ) {
         if (bindingResult.hasErrors())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PasswordResetResponse.withBindingErrors(bindingResult));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BasicResponse.withBindingErrors(bindingResult));
         authenticationService.resetPassword(resetDto.getOldPassword(), resetDto.getNewPassword(), httpRequest);
-        return ResponseEntity.ok(PasswordResetResponse.success());
+        return ResponseEntity.ok(BasicResponse.success("password successfully reset"));
     }
 
     @ResponseBody
     @PostMapping("/logout")
-    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
+    public ResponseEntity<BasicResponse> logout(HttpServletRequest request) {
         authenticationService.logout(request);
-        return ResponseEntity.ok().body(LogoutResponse.success());
+        return ResponseEntity.ok().body(BasicResponse.success("logged out successfully"));
     }
 
     @ResponseBody
     @RequestMapping("/recover-password")
-    public ResponseEntity<PasswordRecoveryResponse> recoverPassword(@Valid @RequestBody PasswordRecoveryRequest request, BindingResult bindingResult) {
+    public ResponseEntity<BasicResponse> recoverPassword(@Valid @RequestBody PasswordRecoveryRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PasswordRecoveryResponse.withBindingErrors(bindingResult));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BasicResponse.withBindingErrors(bindingResult));
         authenticationService.recoverPassword(request.getEmail());
-        return ResponseEntity.ok(PasswordRecoveryResponse.success());
+        return ResponseEntity.ok(BasicResponse.success("password recovery email sent"));
     }
 
     @ResponseBody
     @PostMapping("/create-new-password")
-    public ResponseEntity<PasswordResetResponse> createNewPassword(@Valid @RequestBody CreateNewPasswordRequest request, BindingResult bindingResult) {
+    public ResponseEntity<BasicResponse> createNewPassword(@Valid @RequestBody CreateNewPasswordRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PasswordResetResponse.withBindingErrors(bindingResult));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BasicResponse.withBindingErrors(bindingResult));
         authenticationService.createNewPassword(request.getNewPassword(), request.getToken());
-        return ResponseEntity.ok().body(PasswordResetResponse.success());
+        return ResponseEntity.ok().body(BasicResponse.success("password successfully reset"));
     }
 
     @PostMapping("/test-login")

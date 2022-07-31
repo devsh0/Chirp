@@ -1,6 +1,6 @@
 package com.devsh0.chirp.controller;
 
-import com.devsh0.chirp.dto.response.TestResponse;
+import com.devsh0.chirp.dto.response.BasicResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @RequestMapping("/test")
-    public ResponseEntity<TestResponse> test() {
-        return ResponseEntity.ok(new TestResponse(true));
+    public ResponseEntity<BasicResponse> test() {
+        return ResponseEntity.ok(BasicResponse.success("all good"));
     }
 }

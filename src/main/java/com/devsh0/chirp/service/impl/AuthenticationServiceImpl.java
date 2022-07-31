@@ -47,7 +47,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    @Transactional
     public VerificationToken verifyToken(String tokenString) {
         var tokenOrNull = tokenRepository.findByToken(tokenString);
         if (tokenOrNull.isEmpty())
@@ -59,6 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public void verifyTokenAndActivateAccount(String tokenString) {
         var token = verifyToken(tokenString);
         activateAccount(token.getUserId());
