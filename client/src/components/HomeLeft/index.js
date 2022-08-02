@@ -9,7 +9,10 @@ export default function Left() {
   };
 
   return (
-    <div style={bgImgProps} className={"w-1/2 flex justify-center items-center bg-blue-twitter"}>
+    <div
+      style={bgImgProps}
+      className={"sm:w-1/2 hidden sm:flex justify-center items-center bg-blue-twitter"}
+    >
       <HomeInfoBox />
     </div>
   );
