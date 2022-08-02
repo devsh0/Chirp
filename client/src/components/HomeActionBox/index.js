@@ -2,7 +2,9 @@ import imgChirpLogo from "../../chirp-logo.png";
 
 export default function HomeActionBox() {
   return (
-    <div className={"w-10/12 sm:w-2/3 text-center flex-col text-gray-100"}>
+    <div
+      className={"w-10/12 h-full flex flex-col justify-center sm:w-2/3 text-center text-gray-100"}
+    >
       <div>
         <img className={"w-20 m-auto sm:-mx-4"} src={imgChirpLogo} alt={"chirp logo"} />
       </div>
