@@ -17,7 +17,9 @@ export default function SignupForm() {
       <p className={"mt-2 text-sm"}>
         or{" "}
         <button
-          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter font-bold"}
+          className={
+            "underline transition-colors hover:text-blue-twitter-dark text-blue-twitter font-bold"
+          }
         >
           Log In
         </button>
