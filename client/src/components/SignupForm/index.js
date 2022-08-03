@@ -5,7 +5,7 @@ import PasswordField from "../PasswordField";
 
 export default function SignupForm() {
   return (
-    <div className={"bg-zinc-900 m-auto sm:w-1/2 text-sm rounded font-normal p-8"}>
+    <div className={"bg-dark-secondary m-auto sm:w-1/2 text-sm rounded font-normal p-8"}>
       <form className={"flex flex-col space-y-2"}>
         <EmailField />
         <UsernameField />

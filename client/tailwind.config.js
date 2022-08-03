@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         "blue-twitter": "#4D9FEB",
         "blue-twitter-dark": "#3a8de7",
-        "zinc-1000": "#202124",
+        "dark-primary": "#202124",
+        "dark-secondary": "rgb(24, 24, 27)",
       },
     },
   },
