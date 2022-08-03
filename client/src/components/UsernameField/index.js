@@ -1,12 +1,4 @@
-import { useState } from "react";
-
-export default function UsernameField() {
-  const [username, setUsername] = useState("");
-
-  function handleInputChange(event) {
-    setUsername(event.target.value);
-  }
-
+export default function UsernameField({ onUsernameInputChange }) {
   return (
     <div className={"flex flex-col relative"}>
       <label className={"w-20 text-left"} htmlFor={"username"}>
@@ -15,11 +7,10 @@ export default function UsernameField() {
       <input
         placeholder={"metalbender-yo"}
         className={"h-8 rounded-sm w-full bg-transparent border border-gray-700 text-gray-100 px-2"}
-        value={username}
         type={"text"}
         name={"username"}
         id={"username"}
-        onInput={handleInputChange}
+        onInput={onUsernameInputChange}
       />
     </div>
   );
