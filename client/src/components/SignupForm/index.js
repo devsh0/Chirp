@@ -26,15 +26,11 @@ export default function SignupForm() {
   }
 
   return (
-    <div
-      className={"border w-10/12 bg-dark-secondary m-auto sm:w-1/2 text-sm rounded font-normal p-8"}
-    >
-      <form className={"flex flex-col space-y-2"}>
-        <EmailField onEmailInputChange={handleEmailInputChange} />
-        <UsernameField onUsernameInputChange={handleUsernameInputChange} />
-        <PasswordField onPasswordInputChange={handlePasswordInputChange} />
-        <SignupButton onSignUp={handleSignup} />
-      </form>
+    <form className={"flex flex-col space-y-2"}>
+      <EmailField onEmailInputChange={handleEmailInputChange} />
+      <UsernameField onUsernameInputChange={handleUsernameInputChange} />
+      <PasswordField onPasswordInputChange={handlePasswordInputChange} />
+      <SignupButton onSignUp={handleSignup} />
       <p className={"mt-2 text-sm"}>
         or{" "}
         <button
@@ -45,6 +41,6 @@ export default function SignupForm() {
           Log In
         </button>
       </p>
-    </div>
+    </form>
   );
 }

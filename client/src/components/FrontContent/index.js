@@ -1,5 +1,6 @@
 import SignupForm from "../SignupForm";
 import imgChirpLogo from "../../chirp-logo.png";
+import FormContainer from "../FormContainer";
 
 export default function FrontContent() {
   return (
@@ -11,7 +12,9 @@ export default function FrontContent() {
         Stay in the loop! <br />
         Join Chirp and find out what everyone's up to.
       </header>
-      <SignupForm />
+      <FormContainer>
+        <SignupForm />
+      </FormContainer>
     </main>
   );
 }
