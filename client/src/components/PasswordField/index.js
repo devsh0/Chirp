@@ -21,6 +21,7 @@ export default function PasswordField() {
         Password
       </label>
       <input
+        placeholder={"70PHY0UrU13"}
         className={"h-8 rounded-sm w-full bg-transparent border border-gray-700 text-gray-100 px-2"}
         value={password}
         type={visible ? "text" : "password"}
@@ -29,7 +30,7 @@ export default function PasswordField() {
         onInput={handleInputChange}
       />
       <button
-        className={"p-1 absolute bottom-1 right-1 bottom-2 outline-none"}
+        className={"p-1 absolute bottom-1 right-1 outline-none"}
         onClick={handleEyeClick}
         title={visible ? "Hide" : "Show"}
       >

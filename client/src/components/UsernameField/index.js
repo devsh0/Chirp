@@ -13,6 +13,7 @@ export default function UsernameField() {
         Username
       </label>
       <input
+        placeholder={"metalbender-yo"}
         className={"h-8 rounded-sm w-full bg-transparent border border-gray-700 text-gray-100 px-2"}
         value={username}
         type={"text"}

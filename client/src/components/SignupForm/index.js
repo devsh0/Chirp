@@ -1,4 +1,4 @@
-import HomeActionButton from "../HomeActionButton";
+import SignupButton from "../SignupButton";
 import EmailField from "../EmailField";
 import UsernameField from "../UsernameField";
 import PasswordField from "../PasswordField";
@@ -10,13 +10,10 @@ export default function SignupForm() {
         <EmailField />
         <UsernameField />
         <PasswordField />
-        <HomeActionButton />
+        <SignupButton />
       </form>
-      <div className={"mt-4"}>
-        <a className={"underline text-indigo-400"} href={"#"}>
-          Login
-        </a>{" "}
-        Instead
+      <div className={"mt-2 text-sm"}>
+        <button className={"underline text-blue-twitter font-bold"}>Login</button> Instead
       </div>
     </div>
   );
