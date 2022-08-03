@@ -13,7 +13,7 @@ export default function SignupForm() {
         <SignupButton />
       </form>
       <p className={"mt-2 text-sm"}>
-        <button className={"underline text-blue-twitter font-bold"}>Login</button> Instead
+        or <button className={"underline text-blue-twitter font-bold"}>Log In</button>
       </p>
     </div>
   );
