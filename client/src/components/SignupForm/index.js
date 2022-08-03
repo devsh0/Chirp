@@ -12,9 +12,9 @@ export default function SignupForm() {
         <PasswordField />
         <SignupButton />
       </form>
-      <div className={"mt-2 text-sm"}>
+      <p className={"mt-2 text-sm"}>
         <button className={"underline text-blue-twitter font-bold"}>Login</button> Instead
-      </div>
+      </p>
     </div>
   );
 }
