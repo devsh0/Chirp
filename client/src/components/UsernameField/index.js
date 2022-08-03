@@ -1,7 +1,7 @@
 export default function UsernameField({ onUsernameInputChange }) {
   return (
     <div className={"flex flex-col relative"}>
-      <label className={"w-20 text-left"} htmlFor={"username"}>
+      <label className={"py-1 text-left"} htmlFor={"username"}>
         Username
       </label>
       <input

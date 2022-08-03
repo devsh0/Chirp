@@ -1,8 +1,8 @@
-export default function EmailField({ onEmailInputChange }) {
+export default function EmailField({ onEmailInputChange, children }) {
   return (
     <div className={"flex flex-col relative"}>
-      <label className={"w-20 text-left"} htmlFor={"email"}>
-        Email
+      <label className={"text-left py-1"} htmlFor={"email"}>
+        {children}
       </label>
       <input
         placeholder={"toph@avatar.com"}

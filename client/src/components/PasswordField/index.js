@@ -12,7 +12,7 @@ export default function PasswordField({ onPasswordInputChange }) {
 
   return (
     <div className={"flex flex-col relative"}>
-      <label className={"w-20 text-left"} htmlFor={"password"}>
+      <label className={"py-1 text-left"} htmlFor={"password"}>
         Password
       </label>
       <input

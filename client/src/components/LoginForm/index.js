@@ -1,20 +1,14 @@
-import ActionButton from "../SignupButton";
 import EmailField from "../EmailField";
-import UsernameField from "../UsernameField";
 import PasswordField from "../PasswordField";
 import { useState } from "react";
+import ActionButton from "../SignupButton";
 
-export default function SignupForm() {
+export default function LoginForm() {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   function handleEmailInputChange(event) {
     setEmail(event.target.value);
-  }
-
-  function handleUsernameInputChange(event) {
-    setUsername(event.target.value);
   }
 
   function handlePasswordInputChange(event) {
@@ -22,14 +16,12 @@ export default function SignupForm() {
   }
 
   function handleSubmit() {
-    console.log("Submitting sign up form");
-    // TODO.
+    console.log("Submitting login form");
   }
 
   return (
     <form className={"flex flex-col space-y-2"}>
-      <EmailField onEmailInputChange={handleEmailInputChange}>Email</EmailField>
-      <UsernameField onUsernameInputChange={handleUsernameInputChange} />
+      <EmailField onEmailInputChange={handleEmailInputChange}>Email or Username</EmailField>
       <PasswordField onPasswordInputChange={handlePasswordInputChange} />
       <ActionButton onSubmit={handleSubmit} />
       <p className={"mt-2 text-sm"}>
