@@ -33,12 +33,11 @@ export default function SignupForm({ onLoginButtonClick }) {
       <PasswordField onPasswordInputChange={handlePasswordInputChange} />
       <ActionButton btnText={"Sign Up"} onSubmit={handleSubmit} />
       <p className={"mt-2 text-sm"}>
-        or{" "}
         <button
           className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
           onClick={onLoginButtonClick}
         >
-          Log In
+          Log In Instead
         </button>
       </p>
     </form>
