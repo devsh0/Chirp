@@ -35,9 +35,7 @@ export default function SignupForm({ onLoginButtonClick }) {
       <p className={"mt-2 text-sm"}>
         or{" "}
         <button
-          className={
-            "underline transition-colors hover:text-blue-twitter-dark text-blue-twitter font-bold"
-          }
+          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
           onClick={onLoginButtonClick}
         >
           Log In

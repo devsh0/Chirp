@@ -25,14 +25,18 @@ export default function LoginForm({ onSignupButtonClick }) {
       <PasswordField onPasswordInputChange={handlePasswordInputChange} />
       <ActionButton btnText={"Log In"} onSubmit={handleSubmit} />
       <p className={"mt-2 text-sm"}>
-        or{" "}
         <button
-          className={
-            "underline transition-colors hover:text-blue-twitter-dark text-blue-twitter font-bold"
-          }
+          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
           onClick={onSignupButtonClick}
         >
           Sign Up
+        </button>
+        <span> &#xB7; </span>
+        <button
+          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
+          onClick={onSignupButtonClick}
+        >
+          Forgot Password?
         </button>
       </p>
     </form>
