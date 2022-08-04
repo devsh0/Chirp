@@ -24,7 +24,7 @@ export default function PasswordField({ onPasswordInputChange }) {
         onInput={onPasswordInputChange}
       />
       <button
-        className={"p-1 absolute bottom-1 right-1 outline-none"}
+        className={"focus:border p-1 absolute bottom-1 right-1 outline-none"}
         onClick={handleEyeClick}
         title={visible ? "Hide" : "Show"}
       >
