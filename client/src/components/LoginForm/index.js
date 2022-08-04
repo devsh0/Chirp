@@ -3,7 +3,7 @@ import PasswordField from "../PasswordField";
 import { useState } from "react";
 import ActionButton from "../SignupButton";
 
-export default function LoginForm({ onSignupButtonClick }) {
+export default function LoginForm({ onLinkClick }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,15 +26,17 @@ export default function LoginForm({ onSignupButtonClick }) {
       <ActionButton btnText={"Log In"} onSubmit={handleSubmit} />
       <p className={"mt-2 text-sm"}>
         <button
+          id={"signup-link"}
           className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onSignupButtonClick}
+          onClick={onLinkClick}
         >
           Sign Up
         </button>
         <span> &#xB7; </span>
         <button
+          id={"password-recovery-link"}
           className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onSignupButtonClick}
+          onClick={onLinkClick}
         >
           Forgot Password?
         </button>
