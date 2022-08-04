@@ -5,7 +5,11 @@ import LoginForm from "../LoginForm";
 import { useState } from "react";
 
 export default function FrontContent() {
-  /*const [signup, setSignup] = useState(true);*/
+  const [signup, setSignup] = useState(true);
+
+  function handleFormSwitch() {
+    setSignup(!signup);
+  }
 
   return (
     <main className={"w-full lg:w-1/2 flex flex-col justify-center py-4 text-center text-gray-100"}>
@@ -17,8 +21,11 @@ export default function FrontContent() {
         Join Chirp and find out what everyone's up to.
       </header>
       <FormContainer>
-        <SignupForm />
-        {/*<LoginForm />*/}
+        {signup ? (
+          <SignupForm onLoginButtonClick={handleFormSwitch} />
+        ) : (
+          <LoginForm onSignupButtonClick={handleFormSwitch} />
+        )}
       </FormContainer>
     </main>
   );

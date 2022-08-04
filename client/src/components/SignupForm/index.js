@@ -4,7 +4,7 @@ import UsernameField from "../UsernameField";
 import PasswordField from "../PasswordField";
 import { useState } from "react";
 
-export default function SignupForm() {
+export default function SignupForm({ onLoginButtonClick }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,13 +31,14 @@ export default function SignupForm() {
       <EmailField onEmailInputChange={handleEmailInputChange}>Email</EmailField>
       <UsernameField onUsernameInputChange={handleUsernameInputChange} />
       <PasswordField onPasswordInputChange={handlePasswordInputChange} />
-      <ActionButton onSubmit={handleSubmit} />
+      <ActionButton btnText={"Sign Up"} onSubmit={handleSubmit} />
       <p className={"mt-2 text-sm"}>
         or{" "}
         <button
           className={
             "underline transition-colors hover:text-blue-twitter-dark text-blue-twitter font-bold"
           }
+          onClick={onLoginButtonClick}
         >
           Log In
         </button>
