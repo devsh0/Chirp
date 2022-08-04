@@ -1,6 +1,8 @@
+import FieldError from "../FieldError";
+
 export default function UsernameField({ onUsernameInputChange }) {
   return (
-    <div className={"flex flex-col relative"}>
+    <div className={"flex flex-col"}>
       <label className={"py-1 text-left"} htmlFor={"username"}>
         Username
       </label>
@@ -12,6 +14,7 @@ export default function UsernameField({ onUsernameInputChange }) {
         id={"username"}
         onInput={onUsernameInputChange}
       />
+      <FieldError message={"Username error"} hidden={true} />
     </div>
   );
 }
