@@ -1,7 +1,8 @@
 import EmailField from "../EmailField";
 import PasswordField from "../PasswordField";
 import { useState } from "react";
-import ActionButton from "../SignupButton";
+import ActionButton from "../ActionButton";
+import ActionLink from "../ActionLink";
 
 export default function LoginForm({ onLinkClick }) {
   const [email, setEmail] = useState("");
@@ -24,22 +25,14 @@ export default function LoginForm({ onLinkClick }) {
       <EmailField onEmailInputChange={handleEmailInputChange}>Email or Username</EmailField>
       <PasswordField onPasswordInputChange={handlePasswordInputChange} />
       <ActionButton btnText={"Log In"} onSubmit={handleSubmit} />
-      <p className={"mt-2 text-sm"}>
-        <button
-          id={"signup-link"}
-          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onLinkClick}
-        >
-          Sign Up
-        </button>
+      <p>
+        <ActionLink id={"signup-link"} btnText={"Sign Up"} onLinkClick={onLinkClick} />
         <span> &#xB7; </span>
-        <button
+        <ActionLink
           id={"password-recovery-link"}
-          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onLinkClick}
-        >
-          Forgot Password?
-        </button>
+          btnText={"Forgot Password?"}
+          onLinkClick={onLinkClick}
+        />
       </p>
     </form>
   );

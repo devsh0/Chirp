@@ -1,27 +1,16 @@
 import EmailField from "../EmailField";
-import ActionButton from "../SignupButton";
+import ActionButton from "../ActionButton";
+import ActionLink from "../ActionLink";
 
 export default function PasswordRecoveryForm({ onLinkClick }) {
   return (
     <form className={"flex flex-col space-y-2"}>
       <EmailField>Email</EmailField>
       <ActionButton btnText={"Recover Password"}></ActionButton>
-      <p className={"mt-2 text-sm"}>
-        <button
-          id={"signup-link"}
-          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onLinkClick}
-        >
-          Sign Up
-        </button>
+      <p>
+        <ActionLink id={"signup-link"} btnText={"Sign Up"} onLinkClick={onLinkClick} />
         <span> &#xB7; </span>
-        <button
-          id={"login-link"}
-          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onLinkClick}
-        >
-          Log In
-        </button>
+        <ActionLink id={"login-link"} btnText={"Log In"} onLinkClick={onLinkClick} />
       </p>
     </form>
   );

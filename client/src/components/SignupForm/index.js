@@ -1,8 +1,9 @@
-import ActionButton from "../SignupButton";
+import ActionButton from "../ActionButton";
 import EmailField from "../EmailField";
 import UsernameField from "../UsernameField";
 import PasswordField from "../PasswordField";
 import { useState } from "react";
+import ActionLink from "../ActionLink";
 
 export default function SignupForm({ onLinkClick }) {
   const [email, setEmail] = useState("");
@@ -32,15 +33,7 @@ export default function SignupForm({ onLinkClick }) {
       <UsernameField onUsernameInputChange={handleUsernameInputChange} />
       <PasswordField onPasswordInputChange={handlePasswordInputChange} />
       <ActionButton btnText={"Sign Up"} onSubmit={handleSubmit} />
-      <p className={"mt-2 text-sm"}>
-        <button
-          id={"login-link"}
-          className={"transition-colors hover:text-blue-twitter-dark text-blue-twitter"}
-          onClick={onLinkClick}
-        >
-          Log In Instead
-        </button>
-      </p>
+      <ActionLink id={"login-link"} btnText={"Log In Instead"} onLinkClick={onLinkClick} />
     </form>
   );
 }
