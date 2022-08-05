@@ -5,7 +5,7 @@ import ActionLink from "../ActionLink";
 export default function PasswordRecoveryForm({ onLinkClick }) {
   return (
     <form className={"flex flex-col space-y-2"}>
-      <EmailField>Email</EmailField>
+      <EmailField error={""}>Email</EmailField>
       <ActionButton btnText={"Recover Password"}></ActionButton>
       <p>
         <ActionLink id={"signup-link"} btnText={"Sign Up"} onLinkClick={onLinkClick} />

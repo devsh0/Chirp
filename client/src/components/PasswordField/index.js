@@ -3,7 +3,7 @@ import { BsFillEyeFill as EyeIcon } from "react-icons/bs";
 import { BsFillEyeSlashFill as EyeSlashIcon } from "react-icons/bs";
 import FieldError from "../FieldError";
 
-export default function PasswordField({ onPasswordInputChange }) {
+export default function PasswordField({ onPasswordInputChange, error }) {
   const [visible, setVisible] = useState(false);
 
   function handleEyeClick(event) {
@@ -35,7 +35,7 @@ export default function PasswordField({ onPasswordInputChange }) {
           {visible ? <EyeSlashIcon /> : <EyeIcon />}
         </button>
       </div>
-      <FieldError message={"Password error"} hidden={true} />
+      <FieldError message={error} />
     </div>
   );
 }

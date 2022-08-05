@@ -1,4 +1,5 @@
-export default function FieldError({ message, hidden }) {
-  const classes = `${hidden ? "hidden " : "text-xs text-left pt-1"}`;
+export default function FieldError({ message }) {
+  const hidden = message.length === 0;
+  const classes = `${hidden ? "hidden " : "text-xs text-left pt-1 text-red-500"}`;
   return <p className={classes}>{message}</p>;
 }

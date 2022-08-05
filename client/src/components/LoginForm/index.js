@@ -22,8 +22,10 @@ export default function LoginForm({ onLinkClick }) {
 
   return (
     <form className={"flex flex-col space-y-2"}>
-      <EmailField onEmailInputChange={handleEmailInputChange}>Email or Username</EmailField>
-      <PasswordField onPasswordInputChange={handlePasswordInputChange} />
+      <EmailField error={""} onEmailInputChange={handleEmailInputChange}>
+        Email or Username
+      </EmailField>
+      <PasswordField error={""} onPasswordInputChange={handlePasswordInputChange} />
       <ActionButton btnText={"Log In"} onSubmit={handleSubmit} />
       <p>
         <ActionLink id={"signup-link"} btnText={"Sign Up"} onLinkClick={onLinkClick} />
