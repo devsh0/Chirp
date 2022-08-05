@@ -36,7 +36,7 @@ export default function SignupForm({ onLinkClick }) {
     if (!usernameRegex.test(username)) {
       if (username.length < 3 || username.length > 30)
         setUsernameError("Must be between 3-30 characters!");
-      else setUsernameError("May only consist of alphanumeric characters and dash (-)!");
+      else setUsernameError("May only consist of alphanumeric characters and '-'!");
     } else setUsernameError("");
 
     if (!passwordRegex.test(password)) setPasswordError("Must be at least 8 characters!");
