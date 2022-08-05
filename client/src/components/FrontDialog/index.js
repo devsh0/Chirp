@@ -1,17 +1,13 @@
 import { BsCheckCircle } from "react-icons/bs";
 import ActionButton from "../ActionButton";
-import { useState } from "react";
+import { useContext } from "react";
+import { DialogTrigger } from "../FrontPage";
 
 export default function FrontDialog() {
-  const [hidden, setHidden] = useState(false);
-
-  function handleDismissClicked() {
-    setHidden(true);
-  }
+  const dialogTrigger = useContext(DialogTrigger);
 
   let classList =
     "absolute h-full w-full text-gray-100 p-3 backdrop-blur backdrop-blur-2xl flex justify-center items-center ";
-  classList += hidden ? "hidden" : "";
 
   return (
     <div className={classList}>
@@ -25,7 +21,7 @@ export default function FrontDialog() {
         <p className={""}>
           This is a message. You are reading a message. This can go longer and longer and longer.
         </p>
-        <ActionButton btnText={"Dismiss"} onSubmit={handleDismissClicked} />
+        <ActionButton btnText={"Dismiss"} onSubmit={() => dialogTrigger.dismiss()} />
       </div>
     </div>
   );
