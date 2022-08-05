@@ -8,14 +8,14 @@ import { useState } from "react";
 export const DialogTrigger = React.createContext(null);
 
 export default function FrontPage() {
-  const [showDialog, setShowDialog] = useState(false);
+  const [dialogProps, setDialogProps] = useState({ show: false, title: "", message: "" });
 
   function triggerDialog(title, message) {
-    setShowDialog(true);
+    setDialogProps({ show: true, title: title, message: message });
   }
 
   function dismissDialog() {
-    setShowDialog(false);
+    setDialogProps({ show: false });
   }
 
   const bgImageProps = {
@@ -31,7 +31,11 @@ export default function FrontPage() {
       <DialogTrigger.Provider value={{ trigger: triggerDialog, dismiss: dismissDialog }}>
         <FrontContent />
         <FrontFooter />
-        {showDialog ? <FrontDialog /> : ""}
+        {dialogProps.show ? (
+          <FrontDialog title={dialogProps.title} message={dialogProps.message} />
+        ) : (
+          ""
+        )}
       </DialogTrigger.Provider>
     </div>
   );

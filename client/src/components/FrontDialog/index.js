@@ -3,7 +3,7 @@ import ActionButton from "../ActionButton";
 import { useContext } from "react";
 import { DialogTrigger } from "../FrontPage";
 
-export default function FrontDialog() {
+export default function FrontDialog({ title, message }) {
   const dialogTrigger = useContext(DialogTrigger);
 
   let classList =
@@ -17,10 +17,8 @@ export default function FrontDialog() {
             <BsCheckCircle />
           </span>
         </p>
-        <h1 className={"text-2xl font-bold"}>Success!!</h1>
-        <p className={""}>
-          This is a message. You are reading a message. This can go longer and longer and longer.
-        </p>
+        <h1 className={"text-2xl font-bold"}>{title}</h1>
+        <p className={""}>{message}</p>
         <ActionButton btnText={"Dismiss"} onSubmit={() => dialogTrigger.dismiss()} />
       </div>
     </div>
