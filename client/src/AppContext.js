@@ -1,6 +1,6 @@
 import React from "react";
 
-const apiBase = "localhost:8080/api/v1";
+const apiBase = "http://localhost:8080/api/v1";
 const authBase = `${apiBase}/auth`;
 
 const state = {
