@@ -5,6 +5,7 @@ import com.devsh0.chirp.dto.response.BasicResponse;
 import com.devsh0.chirp.dto.response.LoginResponse;
 import com.devsh0.chirp.dto.response.RegistrationResponse;
 import com.devsh0.chirp.service.AuthenticationService;
+import com.devsh0.chirp.util.ApplicationProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = ApplicationProperties.CLIENT_ADDRESS)
 public class AuthenticationController {
     private AuthenticationService authenticationService;
 

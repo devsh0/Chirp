@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ApplicationProperties {
+    public static final String CLIENT_ADDRESS = "http://localhost:3000";
     private static final Properties APP_PROPERTIES;
 
     private ApplicationProperties() {
