@@ -1,6 +1,6 @@
 import FieldError from "../FieldError";
 
-export default function EmailField({ onEmailInputChange, error, children }) {
+export default function EmailField({ value, onEmailInputChange, error, children }) {
   return (
     <div className={"flex flex-col"}>
       <label className={"text-left py-1"} htmlFor={"email"}>
@@ -12,6 +12,7 @@ export default function EmailField({ onEmailInputChange, error, children }) {
         type={"email"}
         name={"email"}
         id={"email"}
+        value={value}
         onInput={onEmailInputChange}
       />
       <FieldError message={error} />
