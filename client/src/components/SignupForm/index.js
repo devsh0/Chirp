@@ -72,18 +72,28 @@ export default function SignupForm({ onLinkClick }) {
     setPasswordError(ucFirst(error.password));
   }
 
+  function resetForm() {
+    setEmail("");
+    setUsername("");
+    setPassword("");
+  }
+
+  function checkError(error) {
+    return !error.email && !error.username && !error.password;
+  }
+
   async function handleSubmit() {
     spinner.trigger();
     let error = validateForm();
     setErrorState(error);
-    const valid = !error.email && !error.username && !error.password;
-    if (valid) {
+    if (checkError(error)) {
       const user = {
         email: email,
         username: username,
         password: password,
       };
       error = await registerUser(user);
+      if (checkError(error)) resetForm();
       setErrorState(error);
     }
     spinner.dismiss();
