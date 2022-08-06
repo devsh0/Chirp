@@ -4,7 +4,7 @@ import UsernameField from "../UsernameField";
 import PasswordField from "../PasswordField";
 import { useContext, useState } from "react";
 import ActionLink from "../ActionLink";
-import { DialogTrigger } from "../FrontPage";
+import { DialogTrigger, SpinnerTrigger } from "../FrontPage";
 import axios from "axios";
 import AppContext from "../../AppContext";
 import { ucFirst } from "../../utils";
@@ -12,6 +12,7 @@ import { ucFirst } from "../../utils";
 export default function SignupForm({ onLinkClick }) {
   const appContext = useContext(AppContext);
   const dialog = useContext(DialogTrigger);
+  const spinner = useContext(SpinnerTrigger);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +44,9 @@ export default function SignupForm({ onLinkClick }) {
         return {};
       }
     } catch (e) {
-      return e.response.data.error;
+      console.log(e);
+      if (e.response.data) return e.response.data.error;
+      return {};
     }
   }
 
@@ -70,6 +73,7 @@ export default function SignupForm({ onLinkClick }) {
   }
 
   async function handleSubmit() {
+    spinner.trigger();
     let error = validateForm();
     setErrorState(error);
     const valid = !error.email && !error.username && !error.password;
@@ -82,6 +86,7 @@ export default function SignupForm({ onLinkClick }) {
       error = await registerUser(user);
       setErrorState(error);
     }
+    spinner.dismiss();
   }
 
   return (
