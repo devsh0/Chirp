@@ -66,10 +66,10 @@ export default function SignupForm({ onLinkClick }) {
     return errors;
   }
 
-  function setErrorState(error) {
-    setEmailError(ucFirst(error.email));
-    setUsernameError(ucFirst(error.username));
-    setPasswordError(ucFirst(error.password));
+  function setOrClearError(validationResult) {
+    setEmailError(ucFirst(validationResult.email));
+    setUsernameError(ucFirst(validationResult.username));
+    setPasswordError(ucFirst(validationResult.password));
   }
 
   function resetForm() {
@@ -78,23 +78,23 @@ export default function SignupForm({ onLinkClick }) {
     setPassword("");
   }
 
-  function isValid(error) {
-    return !error.email && !error.username && !error.password;
+  function isValid(validationResult) {
+    return !validationResult.email && !validationResult.username && !validationResult.password;
   }
 
   async function handleSubmit() {
     spinner.trigger();
-    let validOrNot = validateForm();
-    setErrorState(validOrNot);
-    if (isValid(validOrNot)) {
+    let validationResult = validateForm();
+    setOrClearError(validationResult);
+    if (isValid(validationResult)) {
       const user = {
         email: email,
         username: username,
         password: password,
       };
-      validOrNot = await registerUser(user);
-      if (isValid(validOrNot)) resetForm();
-      setErrorState(validOrNot);
+      validationResult = await registerUser(user);
+      if (isValid(validationResult)) resetForm();
+      setOrClearError(validationResult);
     }
     spinner.dismiss();
   }
