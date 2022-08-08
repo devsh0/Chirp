@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BsFillEyeFill as EyeIcon } from "react-icons/bs";
 import { BsFillEyeSlashFill as EyeSlashIcon } from "react-icons/bs";
-import FieldError from "../FieldError";
+import FieldError from "./FieldError";
 
 export default function PasswordField({ value, onPasswordInputChange, error }) {
   const [visible, setVisible] = useState(false);

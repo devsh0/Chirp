@@ -1,10 +1,10 @@
 import React from "react";
-import FrontContent from "../FrontContent";
-import FrontFooter from "../FrontFooter";
-import BgSocialMedia from "../../social-bg.png";
-import FrontDialog from "../FrontDialog";
+import FrontContent from "./FrontContent";
+import FrontFooter from "./FrontFooter";
+import BgSocialMedia from "../social-bg.png";
+import FrontDialog from "./FrontDialog";
 import { useState } from "react";
-import Spinner from "../Spinner";
+import Spinner from "./Spinner";
 
 export const DialogTrigger = React.createContext(null);
 export const SpinnerTrigger = React.createContext(null);

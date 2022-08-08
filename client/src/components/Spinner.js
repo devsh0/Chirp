@@ -1,4 +1,4 @@
-import imgLoading from "../../loading.png";
+import imgLoading from "../loading.png";
 
 export default function Spinner() {
   return (

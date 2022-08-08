@@ -1,13 +1,13 @@
-import ActionButton from "../ActionButton";
-import EmailField from "../EmailField";
-import UsernameField from "../UsernameField";
-import PasswordField from "../PasswordField";
+import ActionButton from "./ActionButton";
+import EmailField from "./EmailField";
+import UsernameField from "./UsernameField";
+import PasswordField from "./PasswordField";
 import { useContext, useState } from "react";
-import ActionLink from "../ActionLink";
-import { DialogTrigger, SpinnerTrigger } from "../FrontPage";
+import ActionLink from "./ActionLink";
+import { DialogTrigger, SpinnerTrigger } from "./FrontPage";
 import axios from "axios";
-import AppContext from "../../AppContext";
-import { ucFirst } from "../../utils";
+import AppContext from "../AppContext";
+import { ucFirst } from "../utils";
 
 export default function SignupForm({ onLinkClick }) {
   const appContext = useContext(AppContext);

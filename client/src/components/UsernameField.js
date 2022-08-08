@@ -1,4 +1,4 @@
-import FieldError from "../FieldError";
+import FieldError from "./FieldError";
 
 export default function UsernameField({ value, onUsernameInputChange, error }) {
   return (

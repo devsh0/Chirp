@@ -1,7 +1,7 @@
 import { BsCheckCircle } from "react-icons/bs";
-import ActionButton from "../ActionButton";
+import ActionButton from "./ActionButton";
 import { useContext } from "react";
-import { DialogTrigger } from "../FrontPage";
+import { DialogTrigger } from "./FrontPage";
 
 export default function FrontDialog({ title, message }) {
   const dialogTrigger = useContext(DialogTrigger);

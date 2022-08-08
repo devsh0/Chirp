@@ -1,4 +1,4 @@
-import FrontPage from "../FrontPage";
+import FrontPage from "./FrontPage";
 
 export default function App() {
   return (

@@ -1,11 +1,11 @@
-import EmailField from "../EmailField";
-import ActionButton from "../ActionButton";
-import ActionLink from "../ActionLink";
+import EmailField from "./EmailField";
+import ActionButton from "./ActionButton";
+import ActionLink from "./ActionLink";
 import { useContext, useState } from "react";
-import AppContext from "../../AppContext";
-import { DialogTrigger, SpinnerTrigger } from "../FrontPage";
+import AppContext from "../AppContext";
+import { DialogTrigger, SpinnerTrigger } from "./FrontPage";
 import axios from "axios";
-import { ucFirst } from "../../utils";
+import { ucFirst } from "../utils";
 
 export default function PasswordRecoveryForm({ onLinkClick }) {
   const appContext = useContext(AppContext);

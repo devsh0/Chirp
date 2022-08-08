@@ -1,12 +1,12 @@
-import EmailField from "../EmailField";
-import PasswordField from "../PasswordField";
+import EmailField from "./EmailField";
+import PasswordField from "./PasswordField";
 import { useContext, useState } from "react";
-import ActionButton from "../ActionButton";
-import ActionLink from "../ActionLink";
-import AppContext from "../../AppContext";
+import ActionButton from "./ActionButton";
+import ActionLink from "./ActionLink";
+import AppContext from "../AppContext";
 import axios from "axios";
-import { SpinnerTrigger } from "../FrontPage";
-import { ucFirst } from "../../utils";
+import { SpinnerTrigger } from "./FrontPage";
+import { ucFirst } from "../utils";
 
 export default function LoginForm({ onLinkClick }) {
   const appContext = useContext(AppContext);

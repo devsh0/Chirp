@@ -1,9 +1,9 @@
-import SignupForm from "../SignupForm";
-import imgChirpLogo from "../../chirp-logo.png";
-import FormContainer from "../FormContainer";
-import LoginForm from "../LoginForm";
+import SignupForm from "./SignupForm";
+import imgChirpLogo from "../chirp-logo.png";
+import FormContainer from "./FormContainer";
+import LoginForm from "./LoginForm";
 import { useState } from "react";
-import PasswordRecoveryForm from "../PasswordRecoveryForm";
+import PasswordRecoveryForm from "./PasswordRecoveryForm";
 
 export default function FrontContent() {
   const [visibleForm, setVisibleForm] = useState("signup");
