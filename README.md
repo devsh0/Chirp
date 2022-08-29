@@ -1,3 +1,5 @@
+## Intro
+
 Chirp is a Twitter clone in its very early stages. So far, the only thing working is authentication and that too has a few
 rough edges.
 
@@ -66,4 +68,6 @@ npm start
 
 If the stars align just right for you, the following page should pop open in your browser.
 
-![Chirp Home](https://ibb.co/G5rjfPq)
+Check out that cool logo!
+
+![Chirp Home](screenshot/chirp-home.png)
