@@ -1,11 +1,11 @@
 ## Intro
 
 Chirp is a Twitter clone in its very early stages. So far, the only thing working is authentication and that too has a few
-rough edges.
+rough edges. Chirp is built using React and Spring Boot. The source requires Java >= 17 to build and run locally.  
 
-## Build and Run
+## Configuration
 
-You can run Chirp locally if you are willing to go through some initial setup steps.
+You can Chirp locally if you are willing to go through some initial setups.
 
 ### Database Configuration
 
@@ -16,8 +16,7 @@ You can run Chirp locally if you are willing to go through some initial setup st
 
 ### Application Configuration
 
-In addition to MySQL specific properties in `application.properties`, one needs to set up the mail server and the JWT
-secret.
+In addition to MySQL specific fields in `application.properties`, one needs to set up the mail server and JWT secret.
 
 An email server is required for sending real emails to users to verify their email as they Sign Up or when they issue
 a password change request. The mail server requires these properties:
@@ -28,7 +27,7 @@ spring.mail.port=<port>
 spring.mail.username=<username>
 spring.mail.password=<password>
 
-# Set this to false if no authentication is required.
+# Set this to false if authentication isn't required.
 spring.mail.properties.mail.smtp.auth=true
 # Set this to false if not using TLS.
 spring.mail.properties.mail.smtp.starttls.enable=true
@@ -43,7 +42,7 @@ security.jwt.secret=<your-mother's-maiden-name>
 ## Run
 
 The `client` directory contains source for the front-end. The client-side is React based. In order to run the application,
-both, the React front-end as well as Spring Boot back-end needs to run in parallel. Furthermore, they must serve specifically
+the React front-end as well as the Spring Boot back-end need to run in parallel. Furthermore, they must serve specifically
 on the following URLs:
 
     Front-end: http://localhost:3000
@@ -66,7 +65,7 @@ cd Chirp/client
 npm start
 ```
 
-If the stars align just right for you, the following page should pop open in your browser.
+If the stars align just right for you, the following page should pop open in your browser window.
 
 Check out that cool logo!
 
