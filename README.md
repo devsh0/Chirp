@@ -1,7 +1,6 @@
 ## Intro
 
-Chirp is a Twitter clone in its very early stages. So far, the only thing working is authentication and that too has a few
-rough edges. Chirp is built using React and Spring Boot. The source requires Java >= 17 to build and run locally.  
+Chirp is a Twitter clone in its very early stages. It's built using React and Spring Boot. The source requires Java >= 17 to build and run locally.  
 
 ## Configuration
 
